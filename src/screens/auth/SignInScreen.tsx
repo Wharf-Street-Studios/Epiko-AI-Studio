@@ -42,38 +42,38 @@ const SignInScreen: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       {/* Header */}
-      <div className="px-6 py-4 border-b-2 border-gray-200">
+      <div className="px-6 py-5 border-b border-gray-200 bg-white/80 backdrop-blur-xl sticky top-0 z-10 shadow-soft">
         <button
           onClick={() => navigate(-1)}
-          className="text-2xl"
+          className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-all duration-300 hover:scale-110 active:scale-95"
         >
-          ←
+          <span className="text-xl">←</span>
         </button>
       </div>
 
       {/* Content */}
-      <div className="p-6">
-        <div className="mb-8">
-          <div className="w-16 h-16 bg-gray-200 rounded-full mx-auto mb-4 flex items-center justify-center">
-            <span className="text-3xl">✨</span>
+      <div className="p-6 max-w-md mx-auto">
+        <div className="mb-10 animate-fade-in">
+          <div className="w-20 h-20 bg-gradient-to-br from-primary-400 to-accent-400 rounded-full mx-auto mb-6 flex items-center justify-center shadow-medium">
+            <span className="text-4xl">✨</span>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 text-center mb-2">
+          <h1 className="text-4xl font-bold text-gray-900 text-center mb-3 tracking-tight">
             Welcome Back
           </h1>
-          <p className="text-gray-600 text-center">
+          <p className="text-gray-600 text-center text-lg">
             Sign in to continue creating
           </p>
         </div>
 
         {errors.form && (
-          <div className="mb-6 p-4 bg-red-50 border-2 border-red-200 rounded-lg">
-            <p className="text-sm text-red-600">{errors.form}</p>
+          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl shadow-soft animate-slide-up">
+            <p className="text-sm text-red-600 font-medium">{errors.form}</p>
           </div>
         )}
 
-        <div className="space-y-6">
+        <div className="space-y-5 animate-slide-up" style={{ animationDelay: '0.1s' }}>
           <Input
             label="Email"
             type="email"
@@ -95,13 +95,13 @@ const SignInScreen: React.FC = () => {
           />
 
           <div className="flex justify-end">
-            <button className="text-sm text-gray-600 hover:text-gray-900 font-medium">
+            <button className="text-sm text-primary-600 hover:text-primary-700 font-semibold transition-colors duration-300">
               Forgot Password?
             </button>
           </div>
         </div>
 
-        <div className="mt-8">
+        <div className="mt-8 animate-slide-up" style={{ animationDelay: '0.2s' }}>
           <Button
             variant="primary"
             size="large"
@@ -113,11 +113,11 @@ const SignInScreen: React.FC = () => {
           </Button>
         </div>
 
-        <div className="mt-6 text-center">
+        <div className="mt-6 text-center animate-fade-in" style={{ animationDelay: '0.3s' }}>
           <span className="text-gray-600">Don't have an account? </span>
           <button
             onClick={() => navigate('/create-account')}
-            className="text-gray-900 font-semibold hover:underline"
+            className="text-primary-600 font-bold hover:text-primary-700 transition-colors duration-300"
           >
             Create Account
           </button>

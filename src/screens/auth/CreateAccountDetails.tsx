@@ -60,27 +60,29 @@ const CreateAccountDetails: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       {/* Header */}
-      <div className="px-6 py-4 border-b-2 border-gray-200">
+      <div className="px-6 py-5 border-b border-gray-200 bg-white/80 backdrop-blur-xl sticky top-0 z-10 shadow-soft">
         <button
           onClick={() => navigate(-1)}
-          className="text-2xl"
+          className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-all duration-300 hover:scale-110 active:scale-95"
         >
-          ←
+          <span className="text-xl">←</span>
         </button>
       </div>
 
       {/* Content */}
-      <div className="p-6">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">
-          Create Account
-        </h1>
-        <p className="text-gray-600 mb-8">
-          Fill in your details to get started
-        </p>
+      <div className="p-6 max-w-md mx-auto">
+        <div className="mb-8 animate-fade-in">
+          <h1 className="text-4xl font-bold text-gray-900 mb-3 tracking-tight">
+            Create Account
+          </h1>
+          <p className="text-gray-600 text-lg">
+            Fill in your details to get started
+          </p>
+        </div>
 
-        <div className="space-y-6">
+        <div className="space-y-5 animate-slide-up" style={{ animationDelay: '0.1s' }}>
           <Input
             label="Full Name"
             type="text"
@@ -113,7 +115,9 @@ const CreateAccountDetails: React.FC = () => {
               required
             />
             {username && !errors.username && (
-              <p className="mt-2 text-sm text-green-600">✓ Username is available</p>
+              <p className="mt-2 text-sm text-green-600 font-semibold flex items-center gap-1 animate-fade-in">
+                <span>✓</span> Username is available
+              </p>
             )}
           </div>
 
@@ -128,25 +132,33 @@ const CreateAccountDetails: React.FC = () => {
               required
             />
             {password && (
-              <div className="mt-2 flex items-center space-x-2">
-                <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+              <div className="mt-3 flex items-center space-x-3 animate-fade-in">
+                <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden shadow-soft">
                   <div
-                    className={`h-full transition-all duration-300 ${
+                    className={`h-full transition-all duration-500 ${
                       getPasswordStrength() === 'Weak'
-                        ? 'w-1/3 bg-red-500'
+                        ? 'w-1/3 bg-gradient-to-r from-red-500 to-red-400'
                         : getPasswordStrength() === 'Medium'
-                        ? 'w-2/3 bg-yellow-500'
-                        : 'w-full bg-green-500'
+                        ? 'w-2/3 bg-gradient-to-r from-yellow-500 to-yellow-400'
+                        : 'w-full bg-gradient-to-r from-green-500 to-green-400'
                     }`}
                   />
                 </div>
-                <span className="text-sm text-gray-600">{getPasswordStrength()}</span>
+                <span className={`text-sm font-semibold ${
+                  getPasswordStrength() === 'Weak'
+                    ? 'text-red-600'
+                    : getPasswordStrength() === 'Medium'
+                    ? 'text-yellow-600'
+                    : 'text-green-600'
+                }`}>
+                  {getPasswordStrength()}
+                </span>
               </div>
             )}
           </div>
         </div>
 
-        <div className="mt-8">
+        <div className="mt-8 animate-slide-up" style={{ animationDelay: '0.2s' }}>
           <Button
             variant="primary"
             size="large"
