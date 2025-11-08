@@ -22,9 +22,9 @@ const Button: React.FC<ButtonProps> = ({
   const baseStyles = 'font-semibold rounded-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed transform active:scale-95 focus:outline-none focus:ring-4 focus:ring-opacity-30';
 
   const variantStyles = {
-    primary: 'bg-gradient-to-r from-primary-600 to-primary-500 text-white hover:from-primary-700 hover:to-primary-600 shadow-strong hover:shadow-[0_8px_30px_rgba(0,0,0,0.15)] border border-primary-700 focus:ring-primary-300',
-    secondary: 'bg-gray-200 text-gray-900 hover:bg-gray-300 active:bg-gray-400 shadow-medium hover:shadow-strong border-2 border-gray-300 hover:border-gray-400 focus:ring-gray-300',
-    outline: 'bg-white border-2 border-gray-400 text-gray-900 hover:border-gray-600 hover:bg-gray-50 active:bg-gray-100 shadow-medium hover:shadow-strong focus:ring-gray-300',
+    primary: 'bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-800 shadow-lg hover:shadow-xl border-2 border-blue-700 focus:ring-blue-300',
+    secondary: 'bg-gray-300 text-gray-900 hover:bg-gray-400 active:bg-gray-500 shadow-md hover:shadow-lg border-2 border-gray-400 hover:border-gray-500 focus:ring-gray-300',
+    outline: 'bg-white border-3 border-gray-600 text-gray-900 hover:border-gray-800 hover:bg-gray-100 active:bg-gray-200 shadow-md hover:shadow-lg focus:ring-gray-300',
   };
 
   const sizeStyles = {
