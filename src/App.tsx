@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { TokenProvider } from './context/TokenContext';
 import ProtectedRoute from './components/ProtectedRoute';
+import ErrorBoundary from './components/ErrorBoundary';
 
 // Auth Screens
 import WelcomeScreen from './screens/auth/WelcomeScreen';
@@ -40,10 +41,11 @@ import Notifications from './screens/profile/Notifications';
 
 function App() {
   return (
-    <AuthProvider>
-      <TokenProvider>
-        <div className="min-h-screen bg-white">
-          <Routes>
+    <ErrorBoundary>
+      <AuthProvider>
+        <TokenProvider>
+          <div className="min-h-screen bg-white">
+            <Routes>
             {/* Public Auth Routes */}
             <Route path="/welcome" element={<WelcomeScreen />} />
             <Route path="/social-sign-in" element={<SocialSignIn />} />
@@ -82,10 +84,11 @@ function App() {
 
             {/* Catch all - redirect to welcome if not authenticated */}
             <Route path="*" element={<Navigate to="/welcome" replace />} />
-          </Routes>
-        </div>
-      </TokenProvider>
-    </AuthProvider>
+            </Routes>
+          </div>
+        </TokenProvider>
+      </AuthProvider>
+    </ErrorBoundary>
   );
 }
 

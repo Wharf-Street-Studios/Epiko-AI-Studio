@@ -35,9 +35,9 @@ const CreateAccountAvatar: React.FC = () => {
     try {
       await signUp(fullName, email, username, password, selectedAvatar);
       sessionStorage.removeItem('accountDetails');
-      // Auto-navigate to Home after completion
+      // Auto-navigate to Discovery Feed after completion
       setTimeout(() => {
-        navigate('/home');
+        navigate('/discover');
       }, 500);
     } catch (error) {
       console.error('Signup error:', error);

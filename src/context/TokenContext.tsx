@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 interface TokenTransaction {
   id: string;
@@ -30,17 +30,62 @@ const TOKEN_COSTS = {
   'enhance': { base: 15, creator: 12, pro: 9 },
 };
 
+const TOKEN_STORAGE_KEY = 'lorven_tokens';
+const INITIAL_BONUS = 30;
+
 export const TokenProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [balance, setBalance] = useState<number>(30); // Sign up bonus
-  const [transactions, setTransactions] = useState<TokenTransaction[]>([
-    {
-      id: '1',
-      type: 'earn',
-      amount: 30,
-      description: 'Sign up bonus',
-      timestamp: new Date(),
-    },
-  ]);
+  const [balance, setBalance] = useState<number>(() => {
+    try {
+      const stored = localStorage.getItem(TOKEN_STORAGE_KEY);
+      if (stored) {
+        const data = JSON.parse(stored);
+        return data.balance || INITIAL_BONUS;
+      }
+      return INITIAL_BONUS;
+    } catch {
+      return INITIAL_BONUS;
+    }
+  });
+
+  const [transactions, setTransactions] = useState<TokenTransaction[]>(() => {
+    try {
+      const stored = localStorage.getItem(TOKEN_STORAGE_KEY);
+      if (stored) {
+        const data = JSON.parse(stored);
+        return data.transactions || [{
+          id: '1',
+          type: 'earn' as const,
+          amount: INITIAL_BONUS,
+          description: 'Sign up bonus',
+          timestamp: new Date(),
+        }];
+      }
+      return [{
+        id: '1',
+        type: 'earn' as const,
+        amount: INITIAL_BONUS,
+        description: 'Sign up bonus',
+        timestamp: new Date(),
+      }];
+    } catch {
+      return [{
+        id: '1',
+        type: 'earn' as const,
+        amount: INITIAL_BONUS,
+        description: 'Sign up bonus',
+        timestamp: new Date(),
+      }];
+    }
+  });
+
+  // Persist to localStorage
+  useEffect(() => {
+    try {
+      localStorage.setItem(TOKEN_STORAGE_KEY, JSON.stringify({ balance, transactions }));
+    } catch (error) {
+      console.error('Failed to save token data:', error);
+    }
+  }, [balance, transactions]);
 
   const addTransaction = (type: 'earn' | 'spend' | 'purchase', amount: number, description: string) => {
     const transaction: TokenTransaction = {

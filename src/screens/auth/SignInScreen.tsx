@@ -33,7 +33,7 @@ const SignInScreen: React.FC = () => {
       setLoading(true);
       try {
         await signIn(email, password);
-        navigate('/home');
+        navigate('/discover');
       } catch (error) {
         setErrors({ form: 'Invalid email or password' });
         setLoading(false);
