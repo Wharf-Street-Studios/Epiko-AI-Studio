@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BottomNavigation } from '../../components/ui';
+import { BottomNavigation, Avatar } from '../../components/ui';
 import {
   Search01Icon,
   FavouriteIcon,
@@ -29,7 +29,7 @@ interface Post {
 const mockPosts: Post[] = [
   {
     id: 1,
-    creator: { username: 'sarah_creates', avatar: '👩‍🎨' },
+    creator: { username: 'sarah_creates', avatar: '' },
     image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=400&fit=crop',
     tool: 'Face Swap',
     timestamp: '2h',
@@ -40,7 +40,7 @@ const mockPosts: Post[] = [
   },
   {
     id: 2,
-    creator: { username: 'john_ai', avatar: '👨‍💼' },
+    creator: { username: 'john_ai', avatar: '' },
     image: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=400&h=400&fit=crop',
     tool: 'AI Avatar',
     timestamp: '5h',
@@ -51,7 +51,7 @@ const mockPosts: Post[] = [
   },
   {
     id: 3,
-    creator: { username: 'creative_mind', avatar: '🧑‍🎨' },
+    creator: { username: 'creative_mind', avatar: '' },
     image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop',
     tool: 'Enhancement',
     timestamp: '1d',
@@ -62,7 +62,7 @@ const mockPosts: Post[] = [
   },
   {
     id: 4,
-    creator: { username: 'art_lover', avatar: '👩' },
+    creator: { username: 'art_lover', avatar: '' },
     image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop',
     tool: 'Gender Swap',
     timestamp: '2d',
@@ -131,9 +131,7 @@ const DiscoveryFeed: React.FC = () => {
                 onClick={() => navigate(`/profile/${post.creator.username}`)}
                 className="flex items-center gap-2.5 group"
               >
-                <div className="w-9 h-9 bg-dark-200 rounded-full flex items-center justify-center text-lg">
-                  {post.creator.avatar}
-                </div>
+                <Avatar name={post.creator.username} size="small" />
                 <div className="flex items-baseline gap-2">
                   <span className="font-semibold text-white text-sm group-hover:underline">
                     {post.creator.username}

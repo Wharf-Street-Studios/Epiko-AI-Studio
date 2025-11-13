@@ -1,17 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { Button } from '../../components/ui';
-
-const presetAvatars = [
-  '👨', '👩', '🧑', '👨‍💼', '👩‍💼', '🧑‍💼',
-  '👨‍🎨', '👩‍🎨', '🧑‍🎨',
-];
+import { Button, Avatar } from '../../components/ui';
+import { ArrowLeft01Icon, ImageUpload01Icon } from 'hugeicons-react';
 
 const CreateAccountAvatar: React.FC = () => {
   const navigate = useNavigate();
   const { signUp } = useAuth();
-  const [selectedAvatar, setSelectedAvatar] = useState<string>('');
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -33,7 +28,7 @@ const CreateAccountAvatar: React.FC = () => {
 
     setLoading(true);
     try {
-      await signUp(fullName, email, username, password, selectedAvatar);
+      await signUp(fullName, email, username, password, '');
       sessionStorage.removeItem('accountDetails');
       // Auto-navigate to Discovery Feed after completion
       setTimeout(() => {
@@ -45,77 +40,51 @@ const CreateAccountAvatar: React.FC = () => {
     }
   };
 
+  const accountDetails = sessionStorage.getItem('accountDetails');
+  const fullName = accountDetails ? JSON.parse(accountDetails).fullName : '';
+
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-black">
       {/* Header */}
-      <div className="px-6 py-5 border-b-2 border-gray-300 bg-white sticky top-0 z-10 shadow-medium">
+      <div className="px-4 py-3 border-b border-dark-100">
         <button
           onClick={() => navigate(-1)}
-          className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-all duration-300 hover:scale-110 active:scale-95"
+          className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-dark-150 active:scale-95 transition-all"
         >
-          <span className="text-xl">←</span>
+          <ArrowLeft01Icon size={22} color="#ffffff" />
         </button>
       </div>
 
       {/* Content */}
-      <div className="p-6 max-w-md mx-auto">
-        <div className="mb-8 animate-fade-in">
-          <h1 className="text-4xl font-bold text-gray-900 mb-3 tracking-tight">
-            Choose Your Avatar
+      <div className="p-6 max-w-md mx-auto flex flex-col items-center justify-center min-h-[calc(100vh-80px)]">
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold text-white mb-3">
+            Your Profile is Ready
           </h1>
-          <p className="text-gray-600 text-lg">
-            Select a preset or upload your own
+          <p className="text-base text-dark-600">
+            Your avatar will show your initials automatically
           </p>
         </div>
 
-        {/* Upload Custom Avatar */}
-        <div className="mb-8 animate-slide-up" style={{ animationDelay: '0.1s' }}>
-          <button className="w-full h-32 border-2 border-dashed border-gray-300 rounded-2xl hover:border-primary-500 hover:bg-primary-50 transition-all duration-300 flex flex-col items-center justify-center space-y-2 shadow-soft hover:shadow-medium group bg-white">
-            <span className="text-5xl group-hover:scale-110 transition-transform duration-300">📷</span>
-            <span className="text-sm text-gray-600 font-semibold group-hover:text-primary-600 transition-colors">Upload Custom Avatar</span>
-          </button>
+        {/* Avatar Preview */}
+        <div className="mb-8">
+          <Avatar name={fullName} size="xlarge" />
         </div>
 
-        {/* Preset Avatars */}
-        <div className="animate-slide-up" style={{ animationDelay: '0.2s' }}>
-          <h2 className="text-lg font-bold text-gray-900 mb-4">
-            Preset Avatars
-          </h2>
-          <div className="grid grid-cols-3 gap-4">
-            {presetAvatars.map((avatar, index) => (
-              <button
-                key={index}
-                onClick={() => setSelectedAvatar(avatar)}
-                className={`aspect-square rounded-2xl border-2 transition-all duration-300 flex items-center justify-center text-5xl shadow-soft hover:shadow-medium transform
-                  ${selectedAvatar === avatar
-                    ? 'border-primary-500 bg-gradient-to-br from-primary-50 to-accent-50 scale-95 shadow-medium'
-                    : 'border-gray-300 hover:border-primary-400 hover:bg-gradient-to-br hover:from-primary-50 hover:to-accent-50 bg-white hover:scale-105'
-                  }
-                `}
-              >
-                {avatar}
-              </button>
-            ))}
-          </div>
+        {/* Info Box */}
+        <div className="mb-8 p-4 bg-dark-100 rounded-2xl border border-dark-100 max-w-xs">
+          <p className="text-sm text-dark-600 text-center">
+            You can upload a custom profile picture later from your profile settings
+          </p>
         </div>
 
-        <div className="mt-8 space-y-4 animate-slide-up" style={{ animationDelay: '0.3s' }}>
-          <Button
-            variant="primary"
-            size="large"
-            fullWidth
-            onClick={handleCompleteSetup}
-            disabled={!selectedAvatar || loading}
-          >
-            {loading ? 'Creating Account...' : 'Complete Setup'}
-          </Button>
-
+        <div className="w-full space-y-3">
           <button
             onClick={handleCompleteSetup}
-            className="w-full text-center text-gray-600 hover:text-gray-900 text-sm font-semibold transition-colors duration-300"
             disabled={loading}
+            className="w-full bg-white text-black font-semibold text-base py-3 rounded-xl hover:bg-neutral-100 active:scale-98 transition-all disabled:opacity-50"
           >
-            Skip for now
+            {loading ? 'Creating Account...' : 'Complete Setup'}
           </button>
         </div>
       </div>

@@ -1,22 +1,22 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { BottomNavigation } from '../../components/ui';
-import { Settings02Icon, GridIcon, FavouriteIcon } from 'hugeicons-react';
+import { BottomNavigation, Avatar } from '../../components/ui';
+import { Settings02Icon, GridIcon, FavouriteIcon, UserIcon } from 'hugeicons-react';
 
 const mockUserCreations = [
-  { id: 1, emoji: '🎨', likes: 45, tool: 'Face Swap' },
-  { id: 2, emoji: '🌅', likes: 89, tool: 'Scene Swap' },
-  { id: 3, emoji: '✨', likes: 123, tool: 'AI Avatar' },
-  { id: 4, emoji: '🎭', likes: 67, tool: 'Gender Swap' },
-  { id: 5, emoji: '💫', likes: 234, tool: 'Enhancement' },
-  { id: 6, emoji: '🌟', likes: 156, tool: 'Couple Photo' },
+  { id: 1, image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=400&fit=crop', likes: 45, tool: 'Face Swap' },
+  { id: 2, image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop', likes: 89, tool: 'Scene Swap' },
+  { id: 3, image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=400&fit=crop', likes: 123, tool: 'AI Avatar' },
+  { id: 4, image: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=400&h=400&fit=crop', likes: 67, tool: 'Gender Swap' },
+  { id: 5, image: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400&h=400&fit=crop', likes: 234, tool: 'Enhancement' },
+  { id: 6, image: 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400&h=400&fit=crop', likes: 156, tool: 'Couple Photo' },
 ];
 
 const mockLikedContent = [
-  { id: 1, emoji: '💕', creator: 'sarah_creates', likes: 890 },
-  { id: 2, emoji: '🎭', creator: 'john_ai', likes: 567 },
-  { id: 3, emoji: '🌈', creator: 'art_lover', likes: 1234 },
+  { id: 1, image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop', creator: 'sarah_creates', likes: 890 },
+  { id: 2, image: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=400&h=400&fit=crop', creator: 'john_ai', likes: 567 },
+  { id: 3, image: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&h=400&fit=crop', creator: 'art_lover', likes: 1234 },
 ];
 
 const UserProfile: React.FC = () => {
@@ -28,8 +28,8 @@ const UserProfile: React.FC = () => {
     return (
       <div className="min-h-screen bg-black flex flex-col items-center justify-center p-6 pb-20">
         <div className="text-center">
-          <div className="w-20 h-20 bg-dark-100 rounded-full flex items-center justify-center text-4xl mx-auto mb-6">
-            👤
+          <div className="mx-auto mb-6 flex justify-center">
+            <Avatar size="xlarge" />
           </div>
           <h2 className="text-xl font-bold text-white mb-2">Sign In Required</h2>
           <p className="text-sm text-dark-600 mb-8 max-w-xs mx-auto">
@@ -66,9 +66,7 @@ const UserProfile: React.FC = () => {
       <div className="px-4 py-6">
         <div className="flex items-start justify-between mb-6">
           {/* Avatar */}
-          <div className="w-20 h-20 bg-dark-100 rounded-full flex items-center justify-center text-4xl">
-            {user.avatar || '👤'}
-          </div>
+          <Avatar name={user.fullName} size="xlarge" />
 
           {/* Stats */}
           <div className="flex gap-6 pt-2">
@@ -91,7 +89,7 @@ const UserProfile: React.FC = () => {
         <div className="mb-4">
           <h2 className="font-semibold text-white text-base mb-1">{user.fullName}</h2>
           <p className="text-sm text-dark-600">
-            Creating AI-powered content ✨
+            Creating AI-powered content
           </p>
         </div>
 
@@ -150,9 +148,13 @@ const UserProfile: React.FC = () => {
           <div
             key={item.id}
             onClick={() => navigate(`/reel/${item.id}`)}
-            className="aspect-square bg-gradient-to-br from-dark-100 to-dark-150 flex items-center justify-center cursor-pointer active:opacity-70 transition-opacity"
+            className="aspect-square bg-dark-100 cursor-pointer active:opacity-70 transition-opacity overflow-hidden"
           >
-            <span className="text-5xl">{item.emoji}</span>
+            <img
+              src={item.image}
+              alt={`Post ${item.id}`}
+              className="w-full h-full object-cover"
+            />
           </div>
         ))}
       </div>
