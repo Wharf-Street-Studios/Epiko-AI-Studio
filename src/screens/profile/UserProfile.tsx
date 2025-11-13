@@ -66,7 +66,11 @@ const UserProfile: React.FC = () => {
       <div className="px-4 py-6 max-w-2xl mx-auto">
         <div className="flex items-start justify-between mb-6">
           {/* Avatar */}
-          <Avatar name={user.fullName} size="xlarge" />
+          <Avatar
+            name={user.fullName}
+            src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200&h=200&fit=crop&crop=faces"
+            size="xlarge"
+          />
 
           {/* Stats */}
           <div className="flex gap-8">

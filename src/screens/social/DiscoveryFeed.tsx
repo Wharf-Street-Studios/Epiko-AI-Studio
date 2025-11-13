@@ -29,7 +29,7 @@ interface Post {
 const mockPosts: Post[] = [
   {
     id: 1,
-    creator: { username: 'sarah_creates', avatar: '' },
+    creator: { username: 'sarah_creates', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop&crop=faces' },
     image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&h=600&fit=crop',
     tool: 'Face Swap',
     timestamp: '2h',
@@ -40,7 +40,7 @@ const mockPosts: Post[] = [
   },
   {
     id: 2,
-    creator: { username: 'john_ai', avatar: '' },
+    creator: { username: 'john_ai', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=faces' },
     image: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=600&h=600&fit=crop',
     tool: 'AI Avatar',
     timestamp: '5h',
@@ -51,7 +51,7 @@ const mockPosts: Post[] = [
   },
   {
     id: 3,
-    creator: { username: 'creative_mind', avatar: '' },
+    creator: { username: 'creative_mind', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop&crop=faces' },
     image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=600&h=600&fit=crop',
     tool: 'Enhancement',
     timestamp: '1d',
@@ -62,7 +62,7 @@ const mockPosts: Post[] = [
   },
   {
     id: 4,
-    creator: { username: 'art_lover', avatar: '' },
+    creator: { username: 'art_lover', avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop&crop=faces' },
     image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=600&fit=crop',
     tool: 'Gender Swap',
     timestamp: '2d',
@@ -130,7 +130,11 @@ const DiscoveryFeed: React.FC = () => {
                 onClick={() => navigate(`/profile/${post.creator.username}`)}
                 className="flex items-center gap-3 min-w-0 flex-1"
               >
-                <Avatar name={post.creator.username} size="medium" />
+                <Avatar
+                  name={post.creator.username}
+                  src={post.creator.avatar}
+                  size="medium"
+                />
                 <div className="flex flex-col items-start min-w-0">
                   <span className="font-semibold text-white text-sm truncate max-w-full">
                     {post.creator.username}
