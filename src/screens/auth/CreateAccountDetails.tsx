@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Input } from '../../components/ui';
+import { Input } from '../../components/ui';
+import { ArrowLeft01Icon, CheckmarkCircle02Icon } from 'hugeicons-react';
 
 const CreateAccountDetails: React.FC = () => {
   const navigate = useNavigate();
@@ -41,7 +42,6 @@ const CreateAccountDetails: React.FC = () => {
 
   const handleContinue = () => {
     if (validateForm()) {
-      // Store form data in sessionStorage to pass to next screen
       sessionStorage.setItem('accountDetails', JSON.stringify({
         fullName,
         email,
@@ -53,36 +53,40 @@ const CreateAccountDetails: React.FC = () => {
   };
 
   const getPasswordStrength = () => {
-    if (!password) return '';
-    if (password.length < 8) return 'Weak';
-    if (password.length < 12) return 'Medium';
-    return 'Strong';
+    if (!password) return { label: '', width: '0%', color: '' };
+    if (password.length < 8) return { label: 'Weak', width: '33%', color: 'bg-red-500' };
+    if (password.length < 12) return { label: 'Medium', width: '66%', color: 'bg-yellow-500' };
+    return { label: 'Strong', width: '100%', color: 'bg-green-500' };
   };
 
+  const strength = getPasswordStrength();
+
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-black">
       {/* Header */}
-      <div className="px-6 py-5 border-b-2 border-gray-300 bg-white sticky top-0 z-10 shadow-medium">
-        <button
-          onClick={() => navigate(-1)}
-          className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-all duration-300 hover:scale-110 active:scale-95"
-        >
-          <span className="text-xl">←</span>
-        </button>
-      </div>
+      <header className="bg-black border-b border-dark-100">
+        <div className="px-4 py-4 max-w-2xl mx-auto">
+          <button
+            onClick={() => navigate(-1)}
+            className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-dark-100 active:bg-dark-150 transition-colors"
+          >
+            <ArrowLeft01Icon size={24} color="#ffffff" />
+          </button>
+        </div>
+      </header>
 
       {/* Content */}
-      <div className="p-6 max-w-md mx-auto">
-        <div className="mb-8 animate-fade-in">
-          <h1 className="text-4xl font-bold text-gray-900 mb-3 tracking-tight">
+      <div className="p-4 max-w-md mx-auto">
+        <div className="mb-8 pt-4">
+          <h1 className="text-3xl font-bold text-white mb-2">
             Create Account
           </h1>
-          <p className="text-gray-600 text-lg">
+          <p className="text-base text-dark-500">
             Fill in your details to get started
           </p>
         </div>
 
-        <div className="space-y-5 animate-slide-up" style={{ animationDelay: '0.1s' }}>
+        <div className="space-y-4 mb-6">
           <Input
             label="Full Name"
             type="text"
@@ -114,10 +118,11 @@ const CreateAccountDetails: React.FC = () => {
               helperText="Your unique username (minimum 3 characters)"
               required
             />
-            {username && !errors.username && (
-              <p className="mt-2 text-sm text-green-600 font-semibold flex items-center gap-1 animate-fade-in">
-                <span>✓</span> Username is available
-              </p>
+            {username && username.length >= 3 && !errors.username && (
+              <div className="mt-2 flex items-center gap-2 text-green-400">
+                <CheckmarkCircle02Icon size={16} color="#4ade80" />
+                <span className="text-sm font-medium">Username is available</span>
+              </div>
             )}
           </div>
 
@@ -132,41 +137,43 @@ const CreateAccountDetails: React.FC = () => {
               required
             />
             {password && (
-              <div className="mt-3 flex items-center space-x-3 animate-fade-in">
-                <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden shadow-soft">
+              <div className="mt-3">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm text-dark-500">Password strength</span>
+                  <span className={`text-sm font-semibold ${
+                    strength.label === 'Weak' ? 'text-red-400' :
+                    strength.label === 'Medium' ? 'text-yellow-400' :
+                    'text-green-400'
+                  }`}>
+                    {strength.label}
+                  </span>
+                </div>
+                <div className="h-2 bg-dark-100 rounded-full overflow-hidden">
                   <div
-                    className={`h-full transition-all duration-500 ${
-                      getPasswordStrength() === 'Weak'
-                        ? 'w-1/3 bg-gradient-to-r from-red-500 to-red-400'
-                        : getPasswordStrength() === 'Medium'
-                        ? 'w-2/3 bg-gradient-to-r from-yellow-500 to-yellow-400'
-                        : 'w-full bg-gradient-to-r from-green-500 to-green-400'
-                    }`}
+                    className={`h-full transition-all duration-300 ${strength.color}`}
+                    style={{ width: strength.width }}
                   />
                 </div>
-                <span className={`text-sm font-semibold ${
-                  getPasswordStrength() === 'Weak'
-                    ? 'text-red-600'
-                    : getPasswordStrength() === 'Medium'
-                    ? 'text-yellow-600'
-                    : 'text-green-600'
-                }`}>
-                  {getPasswordStrength()}
-                </span>
               </div>
             )}
           </div>
         </div>
 
-        <div className="mt-8 animate-slide-up" style={{ animationDelay: '0.2s' }}>
-          <Button
-            variant="primary"
-            size="large"
-            fullWidth
-            onClick={handleContinue}
+        <button
+          onClick={handleContinue}
+          className="w-full bg-white text-black font-semibold text-base py-3 rounded-xl hover:bg-gray-100 active:scale-98 transition-all"
+        >
+          Continue
+        </button>
+
+        <div className="mt-6 text-center">
+          <span className="text-sm text-dark-500">Already have an account? </span>
+          <button
+            onClick={() => navigate('/sign-in')}
+            className="text-sm text-white font-semibold hover:underline"
           >
-            Continue
-          </Button>
+            Sign in
+          </button>
         </div>
       </div>
     </div>
