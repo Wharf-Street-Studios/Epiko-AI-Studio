@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useFollow } from '../../context/FollowContext';
+import { usePostInteraction } from '../../context/PostInteractionContext';
 import { BottomNavigation, Avatar } from '../../components/ui';
 import { Settings02Icon, GridIcon, FavouriteIcon, BookmarkAdd01Icon } from 'hugeicons-react';
 
@@ -20,14 +21,23 @@ const mockLikedContent = [
   { id: 3, image: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&h=400&fit=crop', creator: 'art_lover', likes: 1234 },
 ];
 
+const mockSavedContent = [
+  { id: 'post_1', image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop', creator: 'creative_mike', likes: 456 },
+  { id: 'post_2', image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop', creator: 'tech_artist', likes: 789 },
+  { id: 'post_3', image: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=400&h=400&fit=crop', creator: 'digital_dreams', likes: 321 },
+];
+
 const UserProfile: React.FC = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const { getFollowerCount, getFollowingCount } = useFollow();
+  const { getSavedPosts } = usePostInteraction();
   const [activeTab, setActiveTab] = useState<'posts' | 'liked' | 'saved'>('posts');
 
   const followerCount = user ? getFollowerCount(user.id) : 0;
   const followingCount = user ? getFollowingCount(user.id) : 0;
+  const savedPostIds = getSavedPosts();
+  const savedContent = mockSavedContent.filter(post => savedPostIds.includes(post.id));
 
   if (!user) {
     return (
@@ -155,7 +165,7 @@ const UserProfile: React.FC = () => {
             )}
           </button>
           <button
-            onClick={() => navigate('/profile/saved')}
+            onClick={() => setActiveTab('saved')}
             className={`flex-1 py-4 flex items-center justify-center gap-2 transition-colors relative ${
               activeTab === 'saved' ? 'text-white' : 'text-dark-500'
             }`}
@@ -174,7 +184,12 @@ const UserProfile: React.FC = () => {
 
       {/* Content Grid */}
       <div className="grid grid-cols-3 gap-1 bg-black max-w-2xl mx-auto">
-        {(activeTab === 'posts' ? mockUserCreations : mockLikedContent).map((item) => (
+        {(activeTab === 'posts'
+          ? mockUserCreations
+          : activeTab === 'liked'
+            ? mockLikedContent
+            : savedContent
+        ).map((item) => (
           <button
             key={item.id}
             onClick={() => navigate(`/reel/${item.id}`)}
@@ -198,6 +213,30 @@ const UserProfile: React.FC = () => {
           <p className="text-base font-semibold text-white mb-2">No posts yet</p>
           <p className="text-sm text-dark-500">
             Start creating with AI tools
+          </p>
+        </div>
+      )}
+
+      {activeTab === 'liked' && mockLikedContent.length === 0 && (
+        <div className="py-20 text-center max-w-2xl mx-auto">
+          <div className="w-16 h-16 bg-dark-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <FavouriteIcon size={28} color="#737373" />
+          </div>
+          <p className="text-base font-semibold text-white mb-2">No liked posts yet</p>
+          <p className="text-sm text-dark-500">
+            Posts you like will appear here
+          </p>
+        </div>
+      )}
+
+      {activeTab === 'saved' && savedContent.length === 0 && (
+        <div className="py-20 text-center max-w-2xl mx-auto">
+          <div className="w-16 h-16 bg-dark-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <BookmarkAdd01Icon size={28} color="#737373" />
+          </div>
+          <p className="text-base font-semibold text-white mb-2">No saved posts yet</p>
+          <p className="text-sm text-dark-500">
+            Save posts to view them later
           </p>
         </div>
       )}
