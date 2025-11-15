@@ -4,7 +4,7 @@
   "description": "Epiko AI Studios - Mobile-First Content Platform",
   "private": true,
   "type": "module",
-  "homepage": "https://wharf-street-studios.github.io/epiko-ai-studios",
+  "homepage": "https://wharf-street-studios.github.io/Epiko-AI-Studios",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
