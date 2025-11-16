@@ -4,3 +4,4 @@ export { default as Card } from './Card';
 export { default as BottomNavigation } from './BottomNavigation';
 export { default as Avatar } from './Avatar';
 export { default as LiquidGlass } from './LiquidGlass';
+export { default as ReportModal } from './ReportModal';

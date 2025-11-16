@@ -55,7 +55,7 @@ function App() {
           <TokenProvider>
             <FollowProvider>
               <PostInteractionProvider>
-                <div className="min-h-screen bg-white">
+                <div className="min-h-screen bg-black">
                   <ScrollToTop />
                   <Routes>
             {/* Public Auth Routes */}

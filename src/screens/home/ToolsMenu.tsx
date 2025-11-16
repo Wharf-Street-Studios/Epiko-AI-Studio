@@ -88,10 +88,16 @@ const ToolsMenu: React.FC = () => {
           <h1 className="text-xl font-bold text-white drop-shadow-lg">Create</h1>
           <button
             onClick={() => navigate('/wallet')}
-            className="flex items-center gap-2 px-3 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full hover:bg-white/20 active:scale-95 transition-all"
+            className="flex items-center gap-2 px-3 py-2 backdrop-blur-md rounded-full hover:scale-105 active:scale-95 transition-all relative group"
+            style={{
+              background: 'linear-gradient(135deg, rgba(251, 191, 36, 0.3), rgba(245, 158, 11, 0.3))',
+              border: '1px solid rgba(251, 191, 36, 0.4)',
+              boxShadow: '0 4px 12px rgba(251, 191, 36, 0.3)',
+            }}
           >
-            <SparklesIcon size={18} color="#ffffff" />
-            <span className="font-semibold text-white text-sm">{balance}</span>
+            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-amber-400/20 to-orange-400/20 opacity-0 group-hover:opacity-100 transition-opacity" />
+            <SparklesIcon size={18} color="#fbbf24" className="relative z-10" />
+            <span className="font-semibold text-white text-sm relative z-10">{balance}</span>
           </button>
         </div>
       </header>
@@ -99,17 +105,39 @@ const ToolsMenu: React.FC = () => {
       {/* Tools Grid */}
       <main className="p-4 max-w-2xl mx-auto">
         <div className="grid grid-cols-2 gap-4 mb-6">
-          {allTools.map((tool) => {
+          {allTools.map((tool, index) => {
             const Icon = tool.icon;
+            // Vibrant gradient colors for each tool
+            const gradients = [
+              'linear-gradient(135deg, rgba(59, 130, 246, 0.4), rgba(147, 51, 234, 0.4))', // blue-purple
+              'linear-gradient(135deg, rgba(168, 85, 247, 0.4), rgba(236, 72, 153, 0.4))', // purple-pink
+              'linear-gradient(135deg, rgba(236, 72, 153, 0.4), rgba(239, 68, 68, 0.4))', // pink-red
+              'linear-gradient(135deg, rgba(249, 115, 22, 0.4), rgba(251, 191, 36, 0.4))', // orange-amber
+              'linear-gradient(135deg, rgba(6, 182, 212, 0.4), rgba(34, 211, 238, 0.4))', // cyan-sky
+              'linear-gradient(135deg, rgba(16, 185, 129, 0.4), rgba(52, 211, 153, 0.4))', // emerald-teal
+            ];
+            const borderGradient = gradients[index % gradients.length];
+
             return (
               <button
                 key={tool.id}
                 onClick={() => navigate(tool.path)}
-                className="rounded-3xl overflow-hidden hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 group shadow-2xl border border-white/10"
+                className="rounded-3xl overflow-hidden hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 group shadow-2xl relative"
                 style={{
                   background: 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%)',
                 }}
               >
+                {/* Gradient border effect */}
+                <div
+                  className="absolute inset-0 rounded-3xl opacity-60 group-hover:opacity-100 transition-opacity"
+                  style={{
+                    background: borderGradient,
+                    padding: '2px',
+                    WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+                    WebkitMaskComposite: 'xor',
+                    maskComposite: 'exclude',
+                  }}
+                />
                 <div className="aspect-[4/5] relative overflow-hidden">
                   <img
                     src={tool.image}

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { usePostInteraction } from '../../context/PostInteractionContext';
 import { useToast } from '../../context/ToastContext';
-import { BottomNavigation, Avatar } from '../../components/ui';
+import { BottomNavigation, Avatar, ReportModal } from '../../components/ui';
 import {
   Search01Icon,
   FavouriteIcon,
@@ -71,6 +71,8 @@ const DiscoveryFeed: React.FC = () => {
   const { showToast } = useToast();
   const [doubleTapPostId, setDoubleTapPostId] = useState<string | null>(null);
   const [lastTap, setLastTap] = useState<number>(0);
+  const [reportModalOpen, setReportModalOpen] = useState(false);
+  const [reportingPost, setReportingPost] = useState<Post | null>(null);
 
   const handleLike = (postId: string) => {
     if (isLiked(postId)) {
@@ -116,6 +118,16 @@ const DiscoveryFeed: React.FC = () => {
     setLastTap(now);
   };
 
+  const handleOpenReport = (post: Post) => {
+    setReportingPost(post);
+    setReportModalOpen(true);
+  };
+
+  const handleCloseReport = () => {
+    setReportModalOpen(false);
+    setTimeout(() => setReportingPost(null), 300);
+  };
+
   return (
     <div className="min-h-screen bg-black pb-20">
       {/* Header */}
@@ -130,9 +142,15 @@ const DiscoveryFeed: React.FC = () => {
           <h1 className="text-xl font-bold text-white drop-shadow-lg">Feed</h1>
           <button
             onClick={() => navigate('/search')}
-            className="w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 active:scale-95 transition-all backdrop-blur-md"
+            className="w-10 h-10 flex items-center justify-center rounded-full hover:scale-110 active:scale-95 transition-all backdrop-blur-md relative group"
+            style={{
+              background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(168, 85, 247, 0.3))',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+              boxShadow: '0 4px 12px rgba(59, 130, 246, 0.3)',
+            }}
           >
-            <Search01Icon size={24} color="#ffffff" />
+            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-400/20 to-purple-400/20 opacity-0 group-hover:opacity-100 transition-opacity" />
+            <Search01Icon size={24} color="#ffffff" className="relative z-10" />
           </button>
         </div>
       </header>
@@ -168,7 +186,10 @@ const DiscoveryFeed: React.FC = () => {
                   <span className="text-xs text-dark-500">{post.timestamp}</span>
                 </div>
               </button>
-              <button className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-dark-100 transition-colors flex-shrink-0">
+              <button
+                onClick={() => handleOpenReport(post)}
+                className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/10 active:scale-95 transition-all flex-shrink-0"
+              >
                 <MoreVerticalIcon size={20} color="#a3a3a3" />
               </button>
             </div>
@@ -254,10 +275,18 @@ const DiscoveryFeed: React.FC = () => {
               <div className="mb-3">
                 <button
                   onClick={() => navigate('/tools')}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full hover:bg-white/20 active:scale-95 transition-all"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:scale-105 active:scale-95 transition-all relative overflow-hidden group"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(168, 85, 247, 0.3))',
+                    backdropFilter: 'blur(12px)',
+                    WebkitBackdropFilter: 'blur(12px)',
+                    border: '1px solid rgba(255, 255, 255, 0.3)',
+                    boxShadow: '0 4px 12px rgba(59, 130, 246, 0.2)',
+                  }}
                 >
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-400/20 to-purple-400/20 opacity-0 group-hover:opacity-100 transition-opacity" />
                   <SparklesIcon size={14} color="#ffffff" />
-                  <span className="text-xs font-semibold text-white">
+                  <span className="text-xs font-semibold text-white relative z-10">
                     {post.tool}
                   </span>
                 </button>
@@ -280,6 +309,16 @@ const DiscoveryFeed: React.FC = () => {
 
       {/* Bottom Navigation */}
       <BottomNavigation />
+
+      {/* Report Modal */}
+      {reportingPost && (
+        <ReportModal
+          isOpen={reportModalOpen}
+          onClose={handleCloseReport}
+          postId={reportingPost.id}
+          username={reportingPost.creator.username}
+        />
+      )}
 
       {/* CSS Animations */}
       <style>{`
