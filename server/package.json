@@ -29,14 +29,17 @@
     "helmet": "^7.1.0",
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
-    "multer": "^1.4.5-lts.1",
+    "multer": "^2.0.2",
     "openai": "^6.9.0",
     "passport-facebook": "^3.0.0",
     "pg": "^8.16.3",
     "uuid": "^9.0.1"
   },
   "devDependencies": {
-    "jest": "^29.7.0",
+    "jest": "^30.0.0",
     "nodemon": "^3.0.2"
+  },
+  "overrides": {
+    "js-yaml": "^4.1.1"
   }
 }
