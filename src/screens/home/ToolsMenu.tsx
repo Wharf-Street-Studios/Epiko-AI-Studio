@@ -77,12 +77,18 @@ const ToolsMenu: React.FC = () => {
   return (
     <div className="min-h-screen bg-black pb-20">
       {/* Header */}
-      <header className="bg-black/95 backdrop-blur-sm border-b border-dark-100 sticky top-0 z-10">
+      <header
+        className="bg-black/60 backdrop-blur-2xl border-b border-white/10 sticky top-0 z-10"
+        style={{
+          backdropFilter: 'blur(40px) saturate(180%)',
+          WebkitBackdropFilter: 'blur(40px) saturate(180%)',
+        }}
+      >
         <div className="px-4 py-4 flex items-center justify-between max-w-2xl mx-auto">
-          <h1 className="text-xl font-bold text-white">Create</h1>
+          <h1 className="text-xl font-bold text-white drop-shadow-lg">Create</h1>
           <button
             onClick={() => navigate('/wallet')}
-            className="flex items-center gap-2 px-3 py-2 bg-dark-100 rounded-full hover:bg-dark-150 active:scale-95 transition-all"
+            className="flex items-center gap-2 px-3 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full hover:bg-white/20 active:scale-95 transition-all"
           >
             <SparklesIcon size={18} color="#ffffff" />
             <span className="font-semibold text-white text-sm">{balance}</span>
@@ -99,22 +105,41 @@ const ToolsMenu: React.FC = () => {
               <button
                 key={tool.id}
                 onClick={() => navigate(tool.path)}
-                className="bg-dark-100 rounded-3xl overflow-hidden hover:scale-[1.02] active:scale-[0.98] transition-transform group"
+                className="rounded-3xl overflow-hidden hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 group shadow-2xl border border-white/10"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%)',
+                }}
               >
-                <div className="aspect-[4/5] relative overflow-hidden bg-dark-150">
+                <div className="aspect-[4/5] relative overflow-hidden">
                   <img
                     src={tool.image}
                     alt={tool.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
+
+                  {/* Glass Icon Container */}
                   <div className="absolute top-3 right-3">
-                    <div className="w-10 h-10 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center">
+                    <div
+                      className="w-10 h-10 bg-white/10 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/20 shadow-lg"
+                      style={{
+                        backdropFilter: 'blur(20px) saturate(180%)',
+                        WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+                      }}
+                    >
                       <Icon size={20} color="#ffffff" />
                     </div>
                   </div>
-                  <div className="absolute bottom-0 left-0 right-0 p-4">
-                    <h3 className="font-bold text-white text-base mb-1">
+
+                  {/* Glass Bottom Container */}
+                  <div
+                    className="absolute bottom-0 left-0 right-0 p-4 bg-black/40 backdrop-blur-xl border-t border-white/10"
+                    style={{
+                      backdropFilter: 'blur(20px) saturate(150%)',
+                      WebkitBackdropFilter: 'blur(20px) saturate(150%)',
+                    }}
+                  >
+                    <h3 className="font-bold text-white text-base mb-1 drop-shadow-lg">
                       {tool.name}
                     </h3>
                     <p className="text-xs text-white/80 mb-3 line-clamp-1">
@@ -132,19 +157,32 @@ const ToolsMenu: React.FC = () => {
         </div>
 
         {/* Get Credits CTA */}
-        <div className="bg-dark-100 rounded-3xl p-6 border border-dark-100">
+        <div
+          className="bg-white/5 backdrop-blur-xl rounded-3xl p-6 border border-white/20 shadow-2xl"
+          style={{
+            backdropFilter: 'blur(20px) saturate(150%)',
+            WebkitBackdropFilter: 'blur(20px) saturate(150%)',
+            background: 'linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.06) 100%)',
+          }}
+        >
           <div className="flex items-start gap-4">
-            <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center flex-shrink-0">
+            <div
+              className="w-12 h-12 bg-white/90 backdrop-blur-md rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg"
+              style={{
+                backdropFilter: 'blur(10px)',
+                WebkitBackdropFilter: 'blur(10px)',
+              }}
+            >
               <SparklesIcon size={24} color="#000000" />
             </div>
             <div className="flex-1 min-w-0">
-              <h3 className="font-bold text-white text-base mb-1">Need more credits?</h3>
-              <p className="text-sm text-dark-500 mb-4">
+              <h3 className="font-bold text-white text-base mb-1 drop-shadow-lg">Need more credits?</h3>
+              <p className="text-sm text-white/70 mb-4">
                 Purchase AI Credits with EPIKO Tokens
               </p>
               <button
                 onClick={() => navigate('/wallet')}
-                className="w-full bg-white text-black font-semibold text-sm py-3 rounded-xl hover:bg-gray-100 active:scale-98 transition-all"
+                className="w-full bg-white/90 backdrop-blur-md text-black font-semibold text-sm py-3 rounded-xl hover:bg-white active:scale-98 transition-all shadow-lg"
               >
                 Buy Credits
               </button>

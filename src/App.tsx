@@ -6,6 +6,7 @@ import { PostInteractionProvider } from './context/PostInteractionContext';
 import { ToastProvider } from './context/ToastContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import ErrorBoundary from './components/ErrorBoundary';
+import ScrollToTop from './components/ScrollToTop';
 
 // Auth Screens
 import WelcomeScreen from './screens/auth/WelcomeScreen';
@@ -55,6 +56,7 @@ function App() {
             <FollowProvider>
               <PostInteractionProvider>
                 <div className="min-h-screen bg-white">
+                  <ScrollToTop />
                   <Routes>
             {/* Public Auth Routes */}
             <Route path="/welcome" element={<WelcomeScreen />} />

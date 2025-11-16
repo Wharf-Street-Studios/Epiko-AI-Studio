@@ -119,12 +119,18 @@ const DiscoveryFeed: React.FC = () => {
   return (
     <div className="min-h-screen bg-black pb-20">
       {/* Header */}
-      <header className="bg-black/95 backdrop-blur-sm border-b border-dark-100 sticky top-0 z-10">
+      <header
+        className="bg-black/60 backdrop-blur-2xl border-b border-white/10 sticky top-0 z-10"
+        style={{
+          backdropFilter: 'blur(40px) saturate(180%)',
+          WebkitBackdropFilter: 'blur(40px) saturate(180%)',
+        }}
+      >
         <div className="px-4 py-4 flex items-center justify-between max-w-2xl mx-auto">
-          <h1 className="text-xl font-bold text-white">Feed</h1>
+          <h1 className="text-xl font-bold text-white drop-shadow-lg">Feed</h1>
           <button
             onClick={() => navigate('/search')}
-            className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-dark-100 active:bg-dark-150 transition-colors"
+            className="w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 active:scale-95 transition-all backdrop-blur-md"
           >
             <Search01Icon size={24} color="#ffffff" />
           </button>

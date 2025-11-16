@@ -37,22 +37,28 @@ const AIToolTemplate: React.FC<AIToolTemplateProps> = ({ config }) => {
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
-    if (files) {
-      const newPhotos: string[] = [];
-      Array.from(files).forEach((file) => {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          newPhotos.push(reader.result as string);
-          if (newPhotos.length === Math.min(files.length, config.uploadCount)) {
-            setUploadedPhotos([...uploadedPhotos, ...newPhotos]);
-            if (uploadedPhotos.length + newPhotos.length >= config.uploadCount) {
-              setCurrentStep(config.templates || config.styles ? 'options' : 'generate');
-            }
+    if (!files || files.length === 0) return;
+
+    const fileArray = Array.from(files).slice(0, config.uploadCount);
+    let loadedCount = 0;
+    const newPhotos: string[] = [];
+
+    fileArray.forEach((file) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        newPhotos.push(reader.result as string);
+        loadedCount++;
+
+        if (loadedCount === fileArray.length) {
+          setUploadedPhotos(newPhotos);
+          // Move to next step after upload completes
+          if (config.templates || config.styles) {
+            setCurrentStep('options');
           }
-        };
-        reader.readAsDataURL(file);
-      });
-    }
+        }
+      };
+      reader.readAsDataURL(file);
+    });
   };
 
   const handleGenerate = async () => {
@@ -77,45 +83,55 @@ const AIToolTemplate: React.FC<AIToolTemplateProps> = ({ config }) => {
       switch (config.toolId) {
         case 'ai-avatar':
           result = await aiAPI.generateAvatar(
-            'User uploaded image',
-            selectedOption as string || 'professional'
+            uploadedPhotos[0] || 'User photo',
+            selectedOption as string || 'realistic'
           );
           break;
 
         case 'face-swap':
           result = await aiAPI.generateFaceSwap(
             uploadedPhotos[0] || '',
-            uploadedPhotos[1] || ''
+            uploadedPhotos[1] || uploadedPhotos[0] || ''
           );
           break;
 
         case 'duo-portrait':
           result = await aiAPI.generateDuoPortrait(
-            'Person 1',
-            'Person 2',
-            selectedOption as string || 'elegant'
+            uploadedPhotos[0] || 'Person 1',
+            uploadedPhotos[1] || 'Person 2',
+            String(selectedOption || 1)
           );
           break;
 
         case 'poster-maker':
           result = await aiAPI.generatePoster(
-            'Custom Theme',
-            'Custom Text',
-            selectedOption as string || 'modern'
+            uploadedPhotos[0] || 'User photo',
+            'Custom Poster',
+            String(selectedOption || 1)
           );
           break;
 
         case 'age-transform':
+          // Map style ID to age
+          const ageMap: Record<string, number> = {
+            'child': 5,
+            'teen': 15,
+            'young': 25,
+            'middle': 50,
+            'senior': 70,
+            'elder': 90
+          };
+          const targetAge = ageMap[selectedOption as string] || 30;
           result = await aiAPI.ageTransform(
             uploadedPhotos[0] || '',
-            30 // Default age
+            targetAge
           );
           break;
 
         case 'enhance':
           result = await aiAPI.enhanceImage(
             uploadedPhotos[0] || '',
-            'professional enhancement'
+            selectedOption as string || 'standard'
           );
           break;
 
@@ -158,25 +174,46 @@ const AIToolTemplate: React.FC<AIToolTemplateProps> = ({ config }) => {
   return (
     <div className="min-h-screen bg-black pb-20">
       {/* Header */}
-      <header className="bg-black/95 backdrop-blur-sm border-b border-dark-100 sticky top-0 z-10">
-        <div className="px-4 py-4 flex items-center justify-between max-w-2xl mx-auto">
-          <div className="flex items-center">
-            <button
-              onClick={() => navigate(-1)}
-              className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-dark-100 active:scale-95 transition-all"
-            >
-              <ArrowLeft01Icon size={24} color="#ffffff" />
-            </button>
-            <h1 className="text-xl font-bold text-white ml-3">{config.name}</h1>
-          </div>
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-1.5 bg-dark-100 px-3 py-2 rounded-xl">
-              <Coins01Icon size={18} color="#3b82f6" />
-              <span className="text-sm font-bold text-white">{balance}</span>
+      <header
+        className="bg-black/60 backdrop-blur-2xl border-b border-white/10 sticky top-0 z-10"
+        style={{
+          backdropFilter: 'blur(40px) saturate(180%)',
+          WebkitBackdropFilter: 'blur(40px) saturate(180%)',
+        }}
+      >
+        <div className="px-4 py-4 max-w-2xl mx-auto">
+          <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center">
+              <button
+                onClick={() => navigate(-1)}
+                className="w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 active:scale-95 transition-all backdrop-blur-md"
+              >
+                <ArrowLeft01Icon size={24} color="#ffffff" />
+              </button>
+              <h1 className="text-xl font-bold text-white ml-3 drop-shadow-lg">{config.name}</h1>
             </div>
-            <div className="flex items-center gap-1 text-sm text-dark-500">
-              <span>Cost:</span>
-              <span className="font-bold text-white">{toolCost}</span>
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-1.5 bg-white/10 backdrop-blur-md border border-white/20 px-3 py-2 rounded-xl shadow-lg">
+                <Coins01Icon size={18} color="#3b82f6" />
+                <span className="text-sm font-bold text-white">{balance}</span>
+              </div>
+              <div className="flex items-center gap-1 text-sm text-white/70">
+                <span>Cost:</span>
+                <span className="font-bold text-white">{toolCost}</span>
+              </div>
+            </div>
+          </div>
+          {/* Demo Mode Badge */}
+          <div className="flex items-center justify-center">
+            <div
+              className="inline-flex items-center gap-1.5 px-3 py-1 bg-blue-500/20 backdrop-blur-md border border-blue-500/30 rounded-full"
+              style={{
+                backdropFilter: 'blur(10px)',
+                WebkitBackdropFilter: 'blur(10px)',
+              }}
+            >
+              <SparklesIcon size={14} color="#3b82f6" />
+              <span className="text-xs font-semibold text-blue-400">Demo Mode</span>
             </div>
           </div>
         </div>

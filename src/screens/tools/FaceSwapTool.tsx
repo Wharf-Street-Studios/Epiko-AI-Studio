@@ -51,10 +51,10 @@ const FaceSwapTool: React.FC = () => {
         setProgress((prev) => Math.min(prev + 10, 90));
       }, 300);
 
-      // Call real API
+      // Call API with uploaded photo
       const result = await aiAPI.generateFaceSwap(
         uploadedPhoto || '',
-        uploadedPhoto || ''
+        uploadedPhoto || '' // In demo mode, we use the same photo
       );
 
       clearInterval(progressInterval);
@@ -63,7 +63,9 @@ const FaceSwapTool: React.FC = () => {
       if (result.success && result.imageUrl) {
         setGeneratedImage(result.imageUrl);
         setIsGenerating(false);
-        setCurrentStep('result');
+        setTimeout(() => {
+          setCurrentStep('result');
+        }, 500);
       } else {
         throw new Error(result.error || 'Generation failed');
       }
@@ -90,15 +92,36 @@ const FaceSwapTool: React.FC = () => {
   return (
     <div className="min-h-screen bg-black pb-20">
       {/* Header */}
-      <header className="bg-black/95 backdrop-blur-sm border-b border-dark-100 sticky top-0 z-10">
-        <div className="px-4 py-4 flex items-center max-w-2xl mx-auto">
-          <button
-            onClick={() => navigate(-1)}
-            className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-dark-100 active:scale-95 transition-all"
-          >
-            <ArrowLeft01Icon size={24} color="#ffffff" />
-          </button>
-          <h1 className="text-xl font-bold text-white ml-3">Face Swap</h1>
+      <header
+        className="bg-black/60 backdrop-blur-2xl border-b border-white/10 sticky top-0 z-10"
+        style={{
+          backdropFilter: 'blur(40px) saturate(180%)',
+          WebkitBackdropFilter: 'blur(40px) saturate(180%)',
+        }}
+      >
+        <div className="px-4 py-4 max-w-2xl mx-auto">
+          <div className="flex items-center mb-2">
+            <button
+              onClick={() => navigate(-1)}
+              className="w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 active:scale-95 transition-all backdrop-blur-md"
+            >
+              <ArrowLeft01Icon size={24} color="#ffffff" />
+            </button>
+            <h1 className="text-xl font-bold text-white ml-3 drop-shadow-lg">Face Swap</h1>
+          </div>
+          {/* Demo Mode Badge */}
+          <div className="flex items-center justify-center">
+            <div
+              className="inline-flex items-center gap-1.5 px-3 py-1 bg-blue-500/20 backdrop-blur-md border border-blue-500/30 rounded-full"
+              style={{
+                backdropFilter: 'blur(10px)',
+                WebkitBackdropFilter: 'blur(10px)',
+              }}
+            >
+              <SparklesIcon size={14} color="#3b82f6" />
+              <span className="text-xs font-semibold text-blue-400">Demo Mode</span>
+            </div>
+          </div>
         </div>
       </header>
 
