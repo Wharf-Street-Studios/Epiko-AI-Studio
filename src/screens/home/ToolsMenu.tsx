@@ -122,14 +122,15 @@ const ToolsMenu: React.FC = () => {
               <button
                 key={tool.id}
                 onClick={() => navigate(tool.path)}
-                className="rounded-3xl overflow-hidden hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 group shadow-2xl relative"
+                className="rounded-3xl overflow-hidden hover:scale-[1.03] active:scale-[0.97] transition-all duration-500 group shadow-2xl relative animate-fade-in-scale"
                 style={{
                   background: 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%)',
+                  animation: `fade-in-scale 0.4s ease-out ${index * 0.08}s backwards`,
                 }}
               >
                 {/* Gradient border effect */}
                 <div
-                  className="absolute inset-0 rounded-3xl opacity-60 group-hover:opacity-100 transition-opacity"
+                  className="absolute inset-0 rounded-3xl opacity-60 group-hover:opacity-100 transition-all duration-500"
                   style={{
                     background: borderGradient,
                     padding: '2px',
@@ -138,43 +139,50 @@ const ToolsMenu: React.FC = () => {
                     maskComposite: 'exclude',
                   }}
                 />
+                {/* Gradient glow effect on hover */}
+                <div
+                  className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-30 transition-opacity duration-500 blur-xl"
+                  style={{
+                    background: borderGradient,
+                  }}
+                />
                 <div className="aspect-[4/5] relative overflow-hidden">
                   <img
                     src={tool.image}
                     alt={tool.name}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent group-hover:via-black/50 transition-all duration-500" />
 
-                  {/* Glass Icon Container */}
+                  {/* Glass Icon Container with Animation */}
                   <div className="absolute top-3 right-3">
                     <div
-                      className="w-10 h-10 bg-white/10 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/20 shadow-lg"
+                      className="w-10 h-10 bg-white/10 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/20 shadow-lg group-hover:scale-110 group-hover:rotate-12 transition-all duration-500"
                       style={{
                         backdropFilter: 'blur(20px) saturate(180%)',
                         WebkitBackdropFilter: 'blur(20px) saturate(180%)',
                       }}
                     >
-                      <Icon size={20} color="#ffffff" />
+                      <Icon size={20} color="#ffffff" className="group-hover:scale-110 transition-transform duration-500" />
                     </div>
                   </div>
 
                   {/* Glass Bottom Container */}
                   <div
-                    className="absolute bottom-0 left-0 right-0 p-4 bg-black/40 backdrop-blur-xl border-t border-white/10"
+                    className="absolute bottom-0 left-0 right-0 p-4 bg-black/40 backdrop-blur-xl border-t border-white/10 group-hover:bg-black/50 transition-all duration-500"
                     style={{
                       backdropFilter: 'blur(20px) saturate(150%)',
                       WebkitBackdropFilter: 'blur(20px) saturate(150%)',
                     }}
                   >
-                    <h3 className="font-bold text-white text-base mb-1 drop-shadow-lg">
+                    <h3 className="font-bold text-white text-base mb-1 drop-shadow-lg group-hover:scale-105 transition-transform duration-300 origin-left">
                       {tool.name}
                     </h3>
-                    <p className="text-xs text-white/80 mb-3 line-clamp-1">
+                    <p className="text-xs text-white/80 mb-3 line-clamp-1 group-hover:text-white transition-colors duration-300">
                       {tool.description}
                     </p>
-                    <div className="flex items-center gap-1.5 text-white/90">
-                      <SparklesIcon size={14} color="#ffffff" />
+                    <div className="flex items-center gap-1.5 text-white/90 group-hover:text-white transition-colors duration-300">
+                      <SparklesIcon size={14} color="#ffffff" className="group-hover:rotate-180 group-hover:scale-125 transition-all duration-500" />
                       <span className="text-xs font-semibold">{tool.cost} {tool.cost === 1 ? 'credit' : 'credits'}</span>
                     </div>
                   </div>
@@ -221,6 +229,24 @@ const ToolsMenu: React.FC = () => {
 
       {/* Bottom Navigation */}
       <BottomNavigation />
+
+      {/* CSS Animations */}
+      <style>{`
+        @keyframes fade-in-scale {
+          from {
+            opacity: 0;
+            transform: scale(0.9) translateY(10px);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+          }
+        }
+
+        .animate-fade-in-scale {
+          animation: fade-in-scale 0.4s ease-out;
+        }
+      `}</style>
     </div>
   );
 };

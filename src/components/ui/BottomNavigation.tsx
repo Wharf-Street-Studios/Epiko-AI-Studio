@@ -32,14 +32,14 @@ const BottomNavigation: React.FC = () => {
 
   return (
     <>
-    <nav
-      className="fixed bottom-0 left-0 right-0 safe-area-bottom z-50 bg-black/60 backdrop-blur-2xl border-t"
-      style={{
-        backdropFilter: 'blur(40px) saturate(180%)',
-        WebkitBackdropFilter: 'blur(40px) saturate(180%)',
-        borderImage: 'linear-gradient(90deg, rgba(59, 130, 246, 0.3), rgba(168, 85, 247, 0.3), rgba(236, 72, 153, 0.3)) 1',
-      }}
-    >
+      <nav
+        className="fixed bottom-0 left-0 right-0 safe-area-bottom z-50 bg-black/60 backdrop-blur-2xl border-t"
+        style={{
+          backdropFilter: 'blur(40px) saturate(180%)',
+          WebkitBackdropFilter: 'blur(40px) saturate(180%)',
+          borderImage: 'linear-gradient(90deg, rgba(59, 130, 246, 0.3), rgba(168, 85, 247, 0.3), rgba(236, 72, 153, 0.3)) 1',
+        }}
+      >
       <div className="max-w-md mx-auto">
         <div className="flex justify-around items-center h-16">
           {navItems.map((item, index) => {
@@ -134,56 +134,57 @@ const BottomNavigation: React.FC = () => {
               </button>
             );
           })}
+          </div>
         </div>
-      </div>
-    </nav>
-    <style>{`
-      @keyframes slide-in {
-        from {
-          width: 0;
-          opacity: 0;
-        }
-        to {
-          width: 3rem;
-          opacity: 1;
-        }
-      }
+      </nav>
 
-      @keyframes pulse-ring {
-        0%, 100% {
-          transform: scale(1);
-          opacity: 0.6;
+      <style>{`
+        @keyframes slide-in {
+          from {
+            width: 0;
+            opacity: 0;
+          }
+          to {
+            width: 3rem;
+            opacity: 1;
+          }
         }
-        50% {
-          transform: scale(1.3);
-          opacity: 0.2;
-        }
-      }
 
-      @keyframes bounce-in {
-        0% {
-          transform: scale(0.8);
+        @keyframes pulse-ring {
+          0%, 100% {
+            transform: scale(1);
+            opacity: 0.6;
+          }
+          50% {
+            transform: scale(1.3);
+            opacity: 0.2;
+          }
         }
-        50% {
-          transform: scale(1.15);
+
+        @keyframes bounce-in {
+          0% {
+            transform: scale(0.8);
+          }
+          50% {
+            transform: scale(1.15);
+          }
+          100% {
+            transform: scale(1);
+          }
         }
-        100% {
-          transform: scale(1);
+
+        .animate-slide-in {
+          animation: slide-in 0.3s ease-out;
         }
-      }
 
-      .animate-slide-in {
-        animation: slide-in 0.3s ease-out;
-      }
+        .animate-pulse-ring {
+          animation: pulse-ring 0.6s ease-out;
+        }
 
-      .animate-pulse-ring {
-        animation: pulse-ring 0.6s ease-out;
-      }
-
-      .animate-bounce-in {
-        animation: bounce-in 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-      }
-    `}</style>
+        .animate-bounce-in {
+          animation: bounce-in 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+      `}</style>
     </>
   );
 };

@@ -73,8 +73,12 @@ const DiscoveryFeed: React.FC = () => {
   const [lastTap, setLastTap] = useState<number>(0);
   const [reportModalOpen, setReportModalOpen] = useState(false);
   const [reportingPost, setReportingPost] = useState<Post | null>(null);
+  const [animatingAction, setAnimatingAction] = useState<{ postId: string; action: 'like' | 'comment' | 'share' | 'bookmark' } | null>(null);
 
   const handleLike = (postId: string) => {
+    setAnimatingAction({ postId, action: 'like' });
+    setTimeout(() => setAnimatingAction(null), 600);
+
     if (isLiked(postId)) {
       unlikePost(postId);
     } else {
@@ -83,6 +87,9 @@ const DiscoveryFeed: React.FC = () => {
   };
 
   const handleBookmark = (postId: string) => {
+    setAnimatingAction({ postId, action: 'bookmark' });
+    setTimeout(() => setAnimatingAction(null), 600);
+
     if (isSaved(postId)) {
       unsavePost(postId);
     } else {
@@ -91,6 +98,9 @@ const DiscoveryFeed: React.FC = () => {
   };
 
   const handleShare = (post: Post) => {
+    setAnimatingAction({ postId: post.id, action: 'share' });
+    setTimeout(() => setAnimatingAction(null), 600);
+
     if (navigator.share) {
       navigator.share({
         title: `Check out this ${post.tool} creation by @${post.creator.username}`,
@@ -226,40 +236,121 @@ const DiscoveryFeed: React.FC = () => {
             <div className="px-4 py-3">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-5">
+                  {/* Like Button */}
                   <button
                     onClick={() => handleLike(post.id)}
-                    className="flex items-center gap-2 active:scale-95 transition-transform"
+                    className="relative flex items-center gap-2 transition-all duration-300 group"
                   >
+                    {/* Glow effect on interaction */}
+                    {animatingAction?.postId === post.id && animatingAction.action === 'like' && (
+                      <div
+                        className="absolute inset-0 -m-2 rounded-full animate-pulse-ring"
+                        style={{
+                          background: 'linear-gradient(135deg, #ef4444, #f87171)',
+                          opacity: 0.6,
+                          filter: 'blur(8px)',
+                        }}
+                      />
+                    )}
                     <FavouriteIcon
                       size={26}
                       color={postLiked ? '#ef4444' : '#ffffff'}
-                      className={`transition-colors ${postLiked ? 'fill-current' : ''}`}
+                      className={`transition-all duration-300 relative z-10 ${
+                        postLiked ? 'fill-current' : ''
+                      } ${
+                        animatingAction?.postId === post.id && animatingAction.action === 'like'
+                          ? 'animate-bounce-in'
+                          : ''
+                      } ${
+                        !postLiked ? 'group-hover:scale-110' : ''
+                      }`}
                     />
                   </button>
 
+                  {/* Comment Button */}
                   <button
-                    onClick={() => navigate(`/reel/${post.id}`)}
-                    className="flex items-center gap-2 active:scale-95 transition-transform"
+                    onClick={() => {
+                      setAnimatingAction({ postId: post.id, action: 'comment' });
+                      setTimeout(() => setAnimatingAction(null), 600);
+                      navigate(`/reel/${post.id}`);
+                    }}
+                    className="relative flex items-center gap-2 transition-all duration-300 group"
                   >
-                    <Message01Icon size={26} color="#ffffff" />
+                    {animatingAction?.postId === post.id && animatingAction.action === 'comment' && (
+                      <div
+                        className="absolute inset-0 -m-2 rounded-full animate-pulse-ring"
+                        style={{
+                          background: 'linear-gradient(135deg, #3b82f6, #8b5cf6)',
+                          opacity: 0.6,
+                          filter: 'blur(8px)',
+                        }}
+                      />
+                    )}
+                    <Message01Icon
+                      size={26}
+                      color="#ffffff"
+                      className={`transition-all duration-300 relative z-10 group-hover:scale-110 ${
+                        animatingAction?.postId === post.id && animatingAction.action === 'comment'
+                          ? 'animate-bounce-in'
+                          : ''
+                      }`}
+                    />
                   </button>
 
+                  {/* Share Button */}
                   <button
                     onClick={() => handleShare(post)}
-                    className="flex items-center gap-2 active:scale-95 transition-transform"
+                    className="relative flex items-center gap-2 transition-all duration-300 group"
                   >
-                    <Share08Icon size={26} color="#ffffff" />
+                    {animatingAction?.postId === post.id && animatingAction.action === 'share' && (
+                      <div
+                        className="absolute inset-0 -m-2 rounded-full animate-pulse-ring"
+                        style={{
+                          background: 'linear-gradient(135deg, #10b981, #34d399)',
+                          opacity: 0.6,
+                          filter: 'blur(8px)',
+                        }}
+                      />
+                    )}
+                    <Share08Icon
+                      size={26}
+                      color="#ffffff"
+                      className={`transition-all duration-300 relative z-10 group-hover:scale-110 ${
+                        animatingAction?.postId === post.id && animatingAction.action === 'share'
+                          ? 'animate-bounce-in'
+                          : ''
+                      }`}
+                    />
                   </button>
                 </div>
 
+                {/* Bookmark Button */}
                 <button
                   onClick={() => handleBookmark(post.id)}
-                  className="active:scale-95 transition-transform"
+                  className="relative transition-all duration-300 group"
                 >
+                  {animatingAction?.postId === post.id && animatingAction.action === 'bookmark' && (
+                    <div
+                      className="absolute inset-0 -m-2 rounded-full animate-pulse-ring"
+                      style={{
+                        background: 'linear-gradient(135deg, #f59e0b, #fbbf24)',
+                        opacity: 0.6,
+                        filter: 'blur(8px)',
+                      }}
+                    />
+                  )}
                   <BookmarkAdd01Icon
                     size={26}
-                    color="#ffffff"
-                    className={postSaved ? 'fill-current' : ''}
+                    color={postSaved ? '#f59e0b' : '#ffffff'}
+                    className={`transition-all duration-300 relative z-10 ${
+                      postSaved ? 'fill-current' : ''
+                    } ${
+                      animatingAction?.postId === post.id && animatingAction.action === 'bookmark'
+                        ? 'animate-bounce-in'
+                        : ''
+                    } ${
+                      !postSaved ? 'group-hover:scale-110' : ''
+                    }`}
                   />
                 </button>
               </div>
@@ -336,8 +427,40 @@ const DiscoveryFeed: React.FC = () => {
             opacity: 0;
           }
         }
+
+        @keyframes pulse-ring {
+          0%, 100% {
+            transform: scale(1);
+            opacity: 0.6;
+          }
+          50% {
+            transform: scale(1.4);
+            opacity: 0.2;
+          }
+        }
+
+        @keyframes bounce-in {
+          0% {
+            transform: scale(0.8);
+          }
+          50% {
+            transform: scale(1.2);
+          }
+          100% {
+            transform: scale(1);
+          }
+        }
+
         .animate-like-burst {
           animation: like-burst 0.6s ease-out;
+        }
+
+        .animate-pulse-ring {
+          animation: pulse-ring 0.6s ease-out;
+        }
+
+        .animate-bounce-in {
+          animation: bounce-in 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         }
       `}</style>
     </div>
