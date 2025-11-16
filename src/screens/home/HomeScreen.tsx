@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useTokens } from '../../context/TokenContext';
 import { Card, Button, BottomNavigation } from '../../components/ui';
-import { Search01Icon, Coins01Icon, Notification02Icon, ChartLineData01Icon, ArrowRight01Icon, FaceIdIcon, UserCircleIcon, FavouriteIcon, Time01Icon, MagicWand02Icon, Image02Icon } from 'hugeicons-react';
+import { Search01Icon, Coins01Icon, Notification02Icon, UserIcon, ChartLineData01Icon, ArrowRight01Icon, FaceIdIcon, UserCircleIcon, FavouriteIcon, Time01Icon, MagicWand02Icon, Image02Icon } from 'hugeicons-react';
 
 // PRD v2.0 - 6 Launch Tools
 const aiTools = [
