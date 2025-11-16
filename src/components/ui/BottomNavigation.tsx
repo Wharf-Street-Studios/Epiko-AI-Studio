@@ -106,13 +106,14 @@ const BottomNavigation: React.FC = () => {
                         border: `1px solid ${color.from}40`,
                       } : {}}
                     >
-                      <Icon
-                        size={26}
-                        color={active ? color.from : '#737373'}
-                        className={`transition-all duration-300 ${
-                          isAnimating ? 'scale-125' : 'scale-100'
-                        }`}
-                      />
+                      <div className={`transition-all duration-300 ${
+                        isAnimating ? 'scale-125' : 'scale-100'
+                      }`}>
+                        <Icon
+                          size={26}
+                          color={active ? color.from : '#737373'}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>

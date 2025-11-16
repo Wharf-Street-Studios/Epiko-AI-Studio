@@ -160,7 +160,9 @@ const DiscoveryFeed: React.FC = () => {
             }}
           >
             <div className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-400/20 to-purple-400/20 opacity-0 group-hover:opacity-100 transition-opacity" />
-            <Search01Icon size={24} color="#ffffff" className="relative z-10" />
+            <div className="relative z-10">
+              <Search01Icon size={24} color="#ffffff" />
+            </div>
           </button>
         </div>
       </header>

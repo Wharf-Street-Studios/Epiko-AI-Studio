@@ -96,7 +96,9 @@ const ToolsMenu: React.FC = () => {
             }}
           >
             <div className="absolute inset-0 rounded-full bg-gradient-to-br from-amber-400/20 to-orange-400/20 opacity-0 group-hover:opacity-100 transition-opacity" />
-            <SparklesIcon size={18} color="#fbbf24" className="relative z-10" />
+            <div className="relative z-10">
+              <SparklesIcon size={18} color="#fbbf24" />
+            </div>
             <span className="font-semibold text-white text-sm relative z-10">{balance}</span>
           </button>
         </div>
@@ -163,7 +165,9 @@ const ToolsMenu: React.FC = () => {
                         WebkitBackdropFilter: 'blur(20px) saturate(180%)',
                       }}
                     >
-                      <Icon size={20} color="#ffffff" className="group-hover:scale-110 transition-transform duration-500" />
+                      <div className="group-hover:scale-110 transition-transform duration-500">
+                        <Icon size={20} color="#ffffff" />
+                      </div>
                     </div>
                   </div>
 
@@ -182,7 +186,9 @@ const ToolsMenu: React.FC = () => {
                       {tool.description}
                     </p>
                     <div className="flex items-center gap-1.5 text-white/90 group-hover:text-white transition-colors duration-300">
-                      <SparklesIcon size={14} color="#ffffff" className="group-hover:rotate-180 group-hover:scale-125 transition-all duration-500" />
+                      <div className="group-hover:rotate-180 group-hover:scale-125 transition-all duration-500">
+                        <SparklesIcon size={14} color="#ffffff" />
+                      </div>
                       <span className="text-xs font-semibold">{tool.cost} {tool.cost === 1 ? 'credit' : 'credits'}</span>
                     </div>
                   </div>

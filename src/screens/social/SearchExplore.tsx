@@ -8,7 +8,7 @@ import {
   FireIcon,
   UserIcon,
   SparklesIcon,
-  TrendingUpIcon
+  ArrowUpRight01Icon
 } from 'hugeicons-react';
 
 const trendingHashtags = [
@@ -24,7 +24,7 @@ const categories = [
   { id: 'all', name: 'All', icon: SparklesIcon, gradient: 'from-blue-500 to-purple-500' },
   { id: 'face-swap', name: 'Face Swap', icon: UserIcon, gradient: 'from-purple-500 to-pink-500' },
   { id: 'avatar', name: 'AI Avatar', icon: SparklesIcon, gradient: 'from-pink-500 to-rose-500' },
-  { id: 'trending', name: 'Trending', icon: TrendingUpIcon, gradient: 'from-orange-500 to-amber-500' },
+  { id: 'trending', name: 'Trending', icon: ArrowUpRight01Icon, gradient: 'from-orange-500 to-amber-500' },
 ];
 
 const mockSearchResults = [
