@@ -57,7 +57,15 @@
       "Bash(gh auth login:*)",
       "Bash(gh auth:*)",
       "Bash(npx gh-pages:*)",
-      "Bash(npm run lint:*)"
+      "Bash(npm run lint:*)",
+      "WebFetch(domain:animate-ui.com)",
+      "WebSearch",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:react.useanimations.com)",
+      "WebFetch(domain:icons.pqoqubbw.dev)",
+      "WebFetch(domain:lucide-animated.com)",
+      "Bash(npx shadcn@latest add:*)",
+      "WebFetch(domain:lucide.dev)"
     ],
     "deny": [],
     "ask": []

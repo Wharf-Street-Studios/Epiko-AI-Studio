@@ -6,7 +6,7 @@ interface NavItem {
   id: string;
   label: string;
   path: string;
-  icon: React.ComponentType<{ size?: number; color?: string }>;
+  icon: React.ComponentType<{ size?: number; color?: string; variant?: string }>;
 }
 
 const navItems: NavItem[] = [
@@ -33,7 +33,7 @@ const BottomNavigation: React.FC = () => {
   return (
     <>
       <nav
-        className="fixed bottom-0 left-0 right-0 safe-area-bottom z-50 bg-black/60 backdrop-blur-2xl border-t"
+        className="fixed bottom-0 left-0 right-0 z-50 bg-black/60 backdrop-blur-2xl border-t pb-safe"
         style={{
           backdropFilter: 'blur(40px) saturate(180%)',
           WebkitBackdropFilter: 'blur(40px) saturate(180%)',
@@ -41,7 +41,7 @@ const BottomNavigation: React.FC = () => {
         }}
       >
       <div className="max-w-md mx-auto">
-        <div className="flex justify-around items-center h-16">
+        <div className="flex justify-around items-center h-16 px-2">
           {navItems.map((item, index) => {
             const Icon = item.icon;
             const active = isActive(item.path);
@@ -58,7 +58,7 @@ const BottomNavigation: React.FC = () => {
               <button
                 key={item.id}
                 onClick={() => handleTabClick(item.path, item.id)}
-                className={`flex flex-col items-center justify-center flex-1 h-full group gap-1 transition-all duration-300 relative ${
+                className={`flex flex-col items-center justify-center flex-1 h-full group transition-all duration-300 relative ${
                   active ? 'scale-105' : 'hover:scale-105'
                 }`}
               >
@@ -73,65 +73,29 @@ const BottomNavigation: React.FC = () => {
                   />
                 )}
 
-                {/* Icon with Gradient Border */}
-                <div className="relative">
-                  {/* Gradient Ring on Active/Animating */}
-                  {(active || isAnimating) && (
-                    <div
-                      className={`absolute inset-0 -m-2 rounded-full ${
-                        isAnimating ? 'animate-pulse-ring' : ''
-                      }`}
-                      style={{
-                        background: `linear-gradient(135deg, ${color.from}, ${color.to})`,
-                        opacity: isAnimating ? 0.6 : 0.3,
-                        filter: 'blur(8px)',
-                      }}
-                    />
-                  )}
+                {/* Icon */}
+                <div className="flex flex-col items-center">
+                  <Icon
+                    size={24}
+                    color={active ? color.from : '#9ca3af'}
+                    variant={active ? 'solid' : 'stroke'}
+                  />
 
-                  {/* Icon Container with Gradient */}
-                  <div
-                    className={`relative transition-all duration-500 ${
-                      isAnimating ? 'animate-bounce-in' : ''
-                    } ${active ? 'drop-shadow-[0_0_12px_var(--glow-color)]' : ''}`}
-                    style={active ? { '--glow-color': color.shadow } as React.CSSProperties : {}}
+                  {/* Label */}
+                  <span
+                    className={`text-[10px] mt-1 transition-all duration-300 ${
+                      active ? 'font-semibold' : 'font-medium'
+                    }`}
+                    style={active ? {
+                      background: `linear-gradient(135deg, ${color.from}, ${color.to})`,
+                      WebkitBackgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
+                      backgroundClip: 'text',
+                    } : { color: '#9ca3af' }}
                   >
-                    <div
-                      className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300 ${
-                        active
-                          ? 'bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md'
-                          : 'hover:bg-white/5'
-                      }`}
-                      style={active ? {
-                        border: `1px solid ${color.from}40`,
-                      } : {}}
-                    >
-                      <div className={`transition-all duration-300 ${
-                        isAnimating ? 'scale-125' : 'scale-100'
-                      }`}>
-                        <Icon
-                          size={26}
-                          color={active ? color.from : '#737373'}
-                        />
-                      </div>
-                    </div>
-                  </div>
+                    {item.label}
+                  </span>
                 </div>
-
-                {/* Label with Gradient Text */}
-                <span
-                  className={`text-xs transition-all duration-300 ${
-                    active ? 'font-semibold' : 'text-dark-500'
-                  }`}
-                  style={active ? {
-                    background: `linear-gradient(135deg, ${color.from}, ${color.to})`,
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    backgroundClip: 'text',
-                  } : {}}
-                >
-                  {item.label}
-                </span>
               </button>
             );
           })}
