@@ -141,7 +141,7 @@ const DiscoveryFeed: React.FC = () => {
     <div className="min-h-screen bg-black pb-20">
       {/* Header */}
       <header
-        className="bg-black/60 backdrop-blur-2xl border-b border-white/10 sticky top-0 z-10"
+        className="bg-black/60 backdrop-blur-2xl border-b border-white/10 sticky top-0 z-50"
         style={{
           backdropFilter: 'blur(40px) saturate(180%)',
           WebkitBackdropFilter: 'blur(40px) saturate(180%)',

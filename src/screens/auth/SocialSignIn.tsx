@@ -53,7 +53,7 @@ const SocialSignIn: React.FC = () => {
   return (
     <div className="min-h-screen bg-black flex flex-col">
       {/* Header */}
-      <div className="bg-black/95 backdrop-blur-sm border-b border-dark-100 sticky top-0 z-10">
+      <div className="bg-black/95 backdrop-blur-sm border-b border-dark-100 sticky top-0 z-50">
         <div className="px-4 py-4 flex items-center max-w-2xl mx-auto">
           <button
             onClick={() => navigate(-1)}

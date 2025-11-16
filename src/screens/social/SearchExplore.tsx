@@ -46,7 +46,7 @@ const SearchExplore: React.FC = () => {
     <div className="min-h-screen bg-black pb-20">
       {/* Header with Gradient */}
       <header
-        className="bg-black/60 backdrop-blur-2xl border-b sticky top-0 z-10"
+        className="bg-black/60 backdrop-blur-2xl border-b sticky top-0 z-50"
         style={{
           backdropFilter: 'blur(40px) saturate(180%)',
           WebkitBackdropFilter: 'blur(40px) saturate(180%)',

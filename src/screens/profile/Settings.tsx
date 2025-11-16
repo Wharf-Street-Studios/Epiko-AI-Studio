@@ -38,7 +38,7 @@ const Settings: React.FC = () => {
   return (
     <div className="min-h-screen bg-black pb-20">
       {/* Header */}
-      <header className="bg-black border-b border-dark-100 sticky top-0 z-10">
+      <header className="bg-black border-b border-dark-100 sticky top-0 z-50">
         <div className="px-4 py-3 flex items-center gap-3">
           <button
             onClick={() => navigate(-1)}
