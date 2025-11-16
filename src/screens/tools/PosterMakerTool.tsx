@@ -1,6 +1,6 @@
 import React from 'react';
 import AIToolTemplate from '../../components/ui/AIToolTemplate';
-import { FireIcon, HeartAddIcon, Rocket01Icon, MaskIcon, SmileIcon, Film01Icon } from 'hugeicons-react';
+import { FireIcon, HeartAddIcon, Rocket01Icon, MaskIcon, SmileIcon, Film01Icon, Image02Icon } from 'hugeicons-react';
 
 const posterTemplates = [
   { id: 1, name: 'Action Movie', icon: FireIcon, category: 'Action' },
@@ -14,7 +14,7 @@ const posterTemplates = [
 const PosterMakerTool: React.FC = () => {
   const config = {
     name: 'Poster Maker',
-    icon: '🎬',
+    icon: Image02Icon,
     toolId: 'poster-maker',
     description: 'Create professional movie-style posters',
     instructions: 'Upload Your Photo',

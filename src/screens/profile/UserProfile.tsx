@@ -52,7 +52,11 @@ const UserProfile: React.FC = () => {
           </p>
           <button
             onClick={() => navigate('/sign-in')}
-            className="bg-white text-black font-semibold text-base px-8 py-3 rounded-xl hover:bg-gray-100 active:scale-98 transition-all"
+            className="bg-white text-black font-semibold text-base px-8 py-3 rounded-xl hover:bg-gray-100 active:scale-98 transition-all backdrop-blur-xl"
+            style={{
+              backdropFilter: 'blur(20px)',
+              WebkitBackdropFilter: 'blur(20px)',
+            }}
           >
             Sign In
           </button>
@@ -70,7 +74,11 @@ const UserProfile: React.FC = () => {
           <h1 className="text-xl font-semibold text-white">{user.username}</h1>
           <button
             onClick={() => navigate('/settings')}
-            className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-dark-100 active:bg-dark-150 transition-colors"
+            className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/20 active:bg-white/30 transition-all backdrop-blur-xl border border-white/10"
+            style={{
+              backdropFilter: 'blur(20px)',
+              WebkitBackdropFilter: 'blur(20px)',
+            }}
           >
             <Settings02Icon size={24} color="#ffffff" />
           </button>
@@ -122,13 +130,23 @@ const UserProfile: React.FC = () => {
         <div className="flex gap-3">
           <button
             onClick={() => navigate('/profile/edit')}
-            className="flex-1 bg-dark-100 text-white font-semibold text-sm py-2.5 rounded-xl border border-dark-200 hover:bg-dark-150 active:scale-98 transition-all"
+            className="flex-1 text-white font-semibold text-sm py-2.5 rounded-xl border border-white/10 hover:bg-white/20 active:scale-98 transition-all backdrop-blur-xl"
+            style={{
+              background: 'rgba(255, 255, 255, 0.05)',
+              backdropFilter: 'blur(20px)',
+              WebkitBackdropFilter: 'blur(20px)',
+            }}
           >
             Edit Profile
           </button>
           <button
             onClick={() => navigate('/wallet')}
-            className="flex-1 bg-dark-100 text-white font-semibold text-sm py-2.5 rounded-xl border border-dark-200 hover:bg-dark-150 active:scale-98 transition-all"
+            className="flex-1 text-white font-semibold text-sm py-2.5 rounded-xl border border-white/10 hover:bg-white/20 active:scale-98 transition-all backdrop-blur-xl"
+            style={{
+              background: 'rgba(255, 255, 255, 0.05)',
+              backdropFilter: 'blur(20px)',
+              WebkitBackdropFilter: 'blur(20px)',
+            }}
           >
             Wallet
           </button>

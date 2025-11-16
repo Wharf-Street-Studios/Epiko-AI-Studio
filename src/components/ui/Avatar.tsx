@@ -47,7 +47,11 @@ const Avatar: React.FC<AvatarProps> = ({
 
   return (
     <div
-      className={`${sizeClasses[size]} rounded-full bg-dark-150 flex items-center justify-center font-semibold text-white ${className}`}
+      className={`${sizeClasses[size]} rounded-full flex items-center justify-center font-semibold text-white ${className}`}
+      style={{
+        background: 'linear-gradient(135deg, #3b82f6, #8b5cf6)',
+        boxShadow: '0 4px 12px rgba(59, 130, 246, 0.3)',
+      }}
     >
       {initials || <UserIcon size={iconSizes[size]} color="#ffffff" />}
     </div>

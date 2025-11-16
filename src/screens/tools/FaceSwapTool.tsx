@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../../components/ui';
-import { ArrowLeft01Icon, Camera01Icon, Image02Icon, SparklesIcon, Download04Icon, Share08Icon, Rotate01Icon } from 'hugeicons-react';
+import { ArrowLeft01Icon, Camera01Icon, Image02Icon, SparklesIcon, Download04Icon, Share08Icon, Rotate01Icon, UserIcon } from 'hugeicons-react';
 import { aiAPI } from '../../services/api';
 
 type Step = 'upload' | 'template' | 'generate' | 'result';
@@ -125,39 +125,21 @@ const FaceSwapTool: React.FC = () => {
         </div>
       </header>
 
-      {/* Step Indicator */}
-      <div className="px-4 py-4 border-b border-dark-100">
-        <div className="flex items-center justify-between max-w-md mx-auto">
-          <div className={`flex flex-col items-center ${currentStep === 'upload' ? 'text-white' : 'text-dark-500'}`}>
-            <div className={`w-8 h-8 rounded-full flex items-center justify-center mb-1 ${currentStep === 'upload' ? 'bg-white text-black' : 'bg-dark-100'}`}>
-              1
-            </div>
-            <span className="text-xs font-medium">Upload</span>
-          </div>
-          <div className="flex-1 h-0.5 bg-dark-100 mx-2" />
-          <div className={`flex flex-col items-center ${currentStep === 'template' || currentStep === 'generate' || currentStep === 'result' ? 'text-white' : 'text-dark-500'}`}>
-            <div className={`w-8 h-8 rounded-full flex items-center justify-center mb-1 ${currentStep === 'template' || currentStep === 'generate' || currentStep === 'result' ? 'bg-white text-black' : 'bg-dark-100'}`}>
-              2
-            </div>
-            <span className="text-xs font-medium">Template</span>
-          </div>
-          <div className="flex-1 h-0.5 bg-dark-100 mx-2" />
-          <div className={`flex flex-col items-center ${currentStep === 'generate' || currentStep === 'result' ? 'text-white' : 'text-dark-500'}`}>
-            <div className={`w-8 h-8 rounded-full flex items-center justify-center mb-1 ${currentStep === 'generate' || currentStep === 'result' ? 'bg-white text-black' : 'bg-dark-100'}`}>
-              3
-            </div>
-            <span className="text-xs font-medium">Generate</span>
-          </div>
-        </div>
-      </div>
 
       {/* Content */}
       <main className="px-4 py-6 max-w-2xl mx-auto">
         {/* Step 1: Upload Photo */}
         {currentStep === 'upload' && (
           <div>
-            <h2 className="text-2xl font-bold text-white mb-2">Upload Your Photo</h2>
-            <p className="text-dark-500 mb-6">Choose a clear photo with your face visible</p>
+            <div className="text-center mb-6">
+              <div className="mb-4 flex justify-center">
+                <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 backdrop-blur-xl flex items-center justify-center border border-white/10">
+                  <UserIcon size={48} color="#ffffff" />
+                </div>
+              </div>
+              <h2 className="text-2xl font-bold text-white mb-2">Upload Your Photo</h2>
+              <p className="text-dark-500">Choose a clear photo with your face visible</p>
+            </div>
 
             <input
               type="file"
@@ -270,7 +252,9 @@ const FaceSwapTool: React.FC = () => {
                 />
               ) : (
                 <div className="text-center">
-                  <SparklesIcon size={80} color="#ffffff" className="mx-auto mb-4" />
+                  <div className="w-32 h-32 rounded-3xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 backdrop-blur-xl flex items-center justify-center border border-white/10 mx-auto mb-4">
+                    <UserIcon size={64} color="#ffffff" />
+                  </div>
                   <p className="text-dark-500 font-medium">Generated Image Preview</p>
                 </div>
               )}

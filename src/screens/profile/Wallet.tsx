@@ -42,7 +42,11 @@ const Wallet: React.FC = () => {
         <div className="px-4 py-4 flex items-center gap-3 max-w-2xl mx-auto">
           <button
             onClick={() => navigate(-1)}
-            className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-dark-100 active:bg-dark-150 transition-colors"
+            className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/20 active:bg-white/30 transition-all backdrop-blur-xl border border-white/10"
+            style={{
+              backdropFilter: 'blur(20px)',
+              WebkitBackdropFilter: 'blur(20px)',
+            }}
           >
             <ArrowLeft01Icon size={24} color="#ffffff" />
           </button>
@@ -77,7 +81,14 @@ const Wallet: React.FC = () => {
             <p className="text-sm text-dark-500 mb-3">
               Purchase AI Credits using EPIKO Tokens from your connected wallet
             </p>
-            <button className="w-full bg-white/10 backdrop-blur-sm border border-white/20 text-white font-semibold py-2.5 rounded-xl hover:bg-white/20 active:scale-98 transition-all">
+            <button
+              className="w-full text-white font-semibold py-2.5 rounded-xl border border-white/20 hover:bg-white/20 active:scale-98 transition-all backdrop-blur-xl"
+              style={{
+                background: 'rgba(255, 255, 255, 0.1)',
+                backdropFilter: 'blur(20px)',
+                WebkitBackdropFilter: 'blur(20px)',
+              }}
+            >
               Connect Wallet
             </button>
           </div>
@@ -91,11 +102,16 @@ const Wallet: React.FC = () => {
               <button
                 key={pkg.credits}
                 onClick={() => handlePurchase(pkg.credits, pkg.epikoTokens)}
-                className={`relative rounded-3xl p-5 text-center transition-all active:scale-95 ${
+                className={`relative rounded-3xl p-5 text-center transition-all active:scale-95 backdrop-blur-xl ${
                   pkg.popular
                     ? 'bg-white text-black'
-                    : 'bg-dark-100 text-white border border-dark-200 hover:bg-dark-150'
+                    : 'text-white border border-white/10 hover:bg-white/20'
                 }`}
+                style={!pkg.popular ? {
+                  background: 'rgba(255, 255, 255, 0.05)',
+                  backdropFilter: 'blur(20px)',
+                  WebkitBackdropFilter: 'blur(20px)',
+                } : undefined}
               >
                 {pkg.popular && (
                   <div className="absolute -top-2 left-1/2 -translate-x-1/2 bg-gradient-to-r from-purple-600 to-blue-600 text-white px-3 py-1 rounded-full text-xs font-bold">

@@ -122,20 +122,39 @@ const SearchExplore: React.FC = () => {
       </header>
 
       {/* Category Pills */}
-      <div className="px-4 py-4 max-w-2xl mx-auto">
-        <div className="flex gap-3 overflow-x-auto scrollbar-hide">
+      <div className="px-4 py-6 max-w-2xl mx-auto overflow-visible">
+        <div className="flex gap-3 overflow-x-auto scrollbar-hide py-3 -mx-1 px-1">
           {categories.map((category) => {
             const Icon = category.icon;
             const isActive = selectedCategory === category.id;
+
+            // Parse gradient colors
+            const gradientParts = category.gradient.split(' ');
+            const fromColor = gradientParts[0]?.replace('from-', '') || 'blue-500';
+            const toColor = gradientParts[1]?.replace('to-', '') || 'purple-500';
+
+            // Map color names to hex values
+            const colorMap: Record<string, string> = {
+              'blue-500': '#3b82f6',
+              'purple-500': '#8b5cf6',
+              'pink-500': '#ec4899',
+              'rose-500': '#f43f5e',
+              'orange-500': '#f97316',
+              'amber-500': '#fbbf24',
+            };
+
+            const fromHex = colorMap[fromColor] || '#3b82f6';
+            const toHex = colorMap[toColor] || '#8b5cf6';
+
             return (
               <button
                 key={category.id}
                 onClick={() => setSelectedCategory(category.id)}
-                className={`flex-shrink-0 flex items-center gap-2 px-5 py-3 rounded-2xl font-bold text-sm transition-all ${
+                className={`flex-shrink-0 flex items-center gap-2 px-5 py-3 rounded-2xl font-bold text-sm transition-transform duration-200 ${
                   isActive ? 'scale-105' : 'hover:scale-105 active:scale-95'
                 }`}
                 style={isActive ? {
-                  background: `linear-gradient(135deg, ${category.gradient.split(' ')[0].replace('from-', '').replace('500', '').includes('blue') ? '#3b82f6' : category.gradient.includes('purple') ? '#8b5cf6' : category.gradient.includes('pink') ? '#ec4899' : category.gradient.includes('orange') ? '#f97316' : '#3b82f6'}, ${category.gradient.split(' ')[2].replace('to-', '').replace('500', '').includes('purple') ? '#8b5cf6' : category.gradient.includes('pink') ? '#ec4899' : category.gradient.includes('rose') ? '#f43f5e' : category.gradient.includes('amber') ? '#fbbf24' : '#8b5cf6'})`,
+                  background: `linear-gradient(135deg, ${fromHex}, ${toHex})`,
                   color: '#ffffff',
                   backdropFilter: 'blur(20px)',
                   WebkitBackdropFilter: 'blur(20px)',

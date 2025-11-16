@@ -65,7 +65,8 @@
       "WebFetch(domain:icons.pqoqubbw.dev)",
       "WebFetch(domain:lucide-animated.com)",
       "Bash(npx shadcn@latest add:*)",
-      "WebFetch(domain:lucide.dev)"
+      "WebFetch(domain:lucide.dev)",
+      "WebFetch(domain:www.npmjs.com)"
     ],
     "deny": [],
     "ask": []

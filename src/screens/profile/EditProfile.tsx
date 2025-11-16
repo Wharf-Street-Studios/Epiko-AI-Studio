@@ -75,14 +75,18 @@ const EditProfile: React.FC = () => {
           <label className="block text-sm font-semibold text-white mb-3">Profile Picture</label>
           <div className="flex items-center justify-center mb-4">
             <div className="relative">
-              <Avatar name={formData.fullName} size="xlarge" />
+              <Avatar
+                name={formData.fullName}
+                src={formData.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200&h=200&fit=crop&crop=faces'}
+                size="xlarge"
+              />
               <button className="absolute bottom-0 right-0 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-lg hover:bg-gray-100 active:scale-95 transition-all">
                 <Camera01Icon size={16} color="#000000" />
               </button>
             </div>
           </div>
           <p className="text-xs text-dark-600 text-center">
-            Avatar shows your initials automatically
+            Click camera icon to change your profile picture
           </p>
         </section>
 

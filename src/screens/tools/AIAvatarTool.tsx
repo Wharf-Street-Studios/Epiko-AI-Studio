@@ -1,6 +1,6 @@
 import React from 'react';
 import AIToolTemplate from '../../components/ui/AIToolTemplate';
-import { Camera01Icon, PaintBoardIcon, UserIcon, CrownIcon, GlobeIcon, SnowIcon } from 'hugeicons-react';
+import { Camera01Icon, PaintBoardIcon, UserIcon, CrownIcon, GlobeIcon, SnowIcon, SparklesIcon } from 'hugeicons-react';
 
 const avatarStyles = [
   { id: 'realistic', name: 'Realistic Portrait', icon: Camera01Icon },
@@ -14,7 +14,7 @@ const avatarStyles = [
 const AIAvatarTool: React.FC = () => {
   const config = {
     name: 'AI Avatar',
-    icon: '👤',
+    icon: SparklesIcon,
     toolId: 'ai-avatar',
     description: 'Transform your photo into a stylized avatar',
     instructions: 'Upload Your Photo',

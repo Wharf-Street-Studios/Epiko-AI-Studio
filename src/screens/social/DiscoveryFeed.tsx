@@ -3,12 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { usePostInteraction } from '../../context/PostInteractionContext';
 import { useToast } from '../../context/ToastContext';
 import { BottomNavigation, Avatar, ReportModal } from '../../components/ui';
+import { Heart, Bookmark } from 'lucide-react';
 import {
   Search01Icon,
-  FavouriteIcon,
   Message01Icon,
   Share08Icon,
-  BookmarkAdd01Icon,
   SparklesIcon,
   MoreVerticalIcon
 } from 'hugeicons-react';
@@ -152,7 +151,7 @@ const DiscoveryFeed: React.FC = () => {
           <h1 className="text-xl font-bold text-white drop-shadow-lg">Feed</h1>
           <button
             onClick={() => navigate('/search')}
-            className="w-10 h-10 flex items-center justify-center rounded-full hover:scale-110 active:scale-95 transition-all backdrop-blur-md relative group"
+            className="w-10 h-10 flex items-center justify-center rounded-full active:scale-95 transition-all backdrop-blur-md relative group"
             style={{
               background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(168, 85, 247, 0.3))',
               border: '1px solid rgba(255, 255, 255, 0.2)',
@@ -225,11 +224,14 @@ const DiscoveryFeed: React.FC = () => {
               {/* Double Tap Like Animation */}
               {doubleTapPostId === post.id && (
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                  <FavouriteIcon
-                    size={120}
-                    color="#ffffff"
-                    className="fill-current animate-like-burst drop-shadow-2xl"
-                  />
+                  <div className="fill-current animate-like-burst drop-shadow-2xl">
+                    <Heart
+                      size={120}
+                      color="#ffffff"
+                      fill="#ffffff"
+                      strokeWidth={1.5}
+                    />
+                  </div>
                 </div>
               )}
             </div>
@@ -241,7 +243,7 @@ const DiscoveryFeed: React.FC = () => {
                   {/* Like Button */}
                   <button
                     onClick={() => handleLike(post.id)}
-                    className="relative flex items-center gap-2 transition-all duration-300 group"
+                    className="relative flex items-center gap-2 group"
                   >
                     {/* Glow effect on interaction */}
                     {animatingAction?.postId === post.id && animatingAction.action === 'like' && (
@@ -254,19 +256,18 @@ const DiscoveryFeed: React.FC = () => {
                         }}
                       />
                     )}
-                    <FavouriteIcon
-                      size={26}
-                      color={postLiked ? '#ef4444' : '#ffffff'}
-                      className={`transition-all duration-300 relative z-10 ${
-                        postLiked ? 'fill-current' : ''
-                      } ${
-                        animatingAction?.postId === post.id && animatingAction.action === 'like'
-                          ? 'animate-bounce-in'
-                          : ''
-                      } ${
-                        !postLiked ? 'group-hover:scale-110' : ''
-                      }`}
-                    />
+                    <div className={`transition-all duration-300 relative z-10 ${
+                      animatingAction?.postId === post.id && animatingAction.action === 'like'
+                        ? 'animate-bounce-in'
+                        : ''
+                    }`}>
+                      <Heart
+                        size={26}
+                        color={postLiked ? '#ef4444' : '#ffffff'}
+                        fill={postLiked ? '#ef4444' : 'none'}
+                        strokeWidth={2}
+                      />
+                    </div>
                   </button>
 
                   {/* Comment Button */}
@@ -276,7 +277,7 @@ const DiscoveryFeed: React.FC = () => {
                       setTimeout(() => setAnimatingAction(null), 600);
                       navigate(`/reel/${post.id}`);
                     }}
-                    className="relative flex items-center gap-2 transition-all duration-300 group"
+                    className="relative flex items-center gap-2 group"
                   >
                     {animatingAction?.postId === post.id && animatingAction.action === 'comment' && (
                       <div
@@ -288,21 +289,22 @@ const DiscoveryFeed: React.FC = () => {
                         }}
                       />
                     )}
-                    <Message01Icon
-                      size={26}
-                      color="#ffffff"
-                      className={`transition-all duration-300 relative z-10 group-hover:scale-110 ${
-                        animatingAction?.postId === post.id && animatingAction.action === 'comment'
-                          ? 'animate-bounce-in'
-                          : ''
-                      }`}
-                    />
+                    <div className={`transition-all duration-300 relative z-10 ${
+                      animatingAction?.postId === post.id && animatingAction.action === 'comment'
+                        ? 'animate-bounce-in'
+                        : ''
+                    }`}>
+                      <Message01Icon
+                        size={26}
+                        color="#ffffff"
+                      />
+                    </div>
                   </button>
 
                   {/* Share Button */}
                   <button
                     onClick={() => handleShare(post)}
-                    className="relative flex items-center gap-2 transition-all duration-300 group"
+                    className="relative flex items-center gap-2 group"
                   >
                     {animatingAction?.postId === post.id && animatingAction.action === 'share' && (
                       <div
@@ -314,22 +316,23 @@ const DiscoveryFeed: React.FC = () => {
                         }}
                       />
                     )}
-                    <Share08Icon
-                      size={26}
-                      color="#ffffff"
-                      className={`transition-all duration-300 relative z-10 group-hover:scale-110 ${
-                        animatingAction?.postId === post.id && animatingAction.action === 'share'
-                          ? 'animate-bounce-in'
-                          : ''
-                      }`}
-                    />
+                    <div className={`transition-all duration-300 relative z-10 ${
+                      animatingAction?.postId === post.id && animatingAction.action === 'share'
+                        ? 'animate-bounce-in'
+                        : ''
+                    }`}>
+                      <Share08Icon
+                        size={26}
+                        color="#ffffff"
+                      />
+                    </div>
                   </button>
                 </div>
 
                 {/* Bookmark Button */}
                 <button
                   onClick={() => handleBookmark(post.id)}
-                  className="relative transition-all duration-300 group"
+                  className="relative group"
                 >
                   {animatingAction?.postId === post.id && animatingAction.action === 'bookmark' && (
                     <div
@@ -341,19 +344,18 @@ const DiscoveryFeed: React.FC = () => {
                       }}
                     />
                   )}
-                  <BookmarkAdd01Icon
-                    size={26}
-                    color={postSaved ? '#f59e0b' : '#ffffff'}
-                    className={`transition-all duration-300 relative z-10 ${
-                      postSaved ? 'fill-current' : ''
-                    } ${
-                      animatingAction?.postId === post.id && animatingAction.action === 'bookmark'
-                        ? 'animate-bounce-in'
-                        : ''
-                    } ${
-                      !postSaved ? 'group-hover:scale-110' : ''
-                    }`}
-                  />
+                  <div className={`transition-all duration-300 relative z-10 ${
+                    animatingAction?.postId === post.id && animatingAction.action === 'bookmark'
+                      ? 'animate-bounce-in'
+                      : ''
+                  }`}>
+                    <Bookmark
+                      size={26}
+                      color={postSaved ? '#f59e0b' : '#ffffff'}
+                      fill={postSaved ? '#f59e0b' : 'none'}
+                      strokeWidth={2}
+                    />
+                  </div>
                 </button>
               </div>
 
@@ -368,7 +370,7 @@ const DiscoveryFeed: React.FC = () => {
               <div className="mb-3">
                 <button
                   onClick={() => navigate('/tools')}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:scale-105 active:scale-95 transition-all relative overflow-hidden group"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full active:scale-95 transition-all relative overflow-hidden group"
                   style={{
                     background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(168, 85, 247, 0.3))',
                     backdropFilter: 'blur(12px)',

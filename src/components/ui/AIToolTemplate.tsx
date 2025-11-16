@@ -7,7 +7,7 @@ import { aiAPI } from '../../services/api';
 
 interface ToolConfig {
   name: string;
-  icon: string;
+  icon: string | React.ComponentType<{ size?: number; color?: string }>;
   toolId: string;
   description: string;
   instructions: string;
@@ -225,7 +225,15 @@ const AIToolTemplate: React.FC<AIToolTemplateProps> = ({ config }) => {
         {currentStep === 'upload' && (
           <div>
             <div className="text-center mb-6">
-              <div className="text-6xl mb-4">{config.icon}</div>
+              <div className="mb-4 flex justify-center">
+                {typeof config.icon === 'string' ? (
+                  <div className="text-6xl">{config.icon}</div>
+                ) : (
+                  <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 backdrop-blur-xl flex items-center justify-center border border-white/10">
+                    {React.createElement(config.icon, { size: 48, color: '#ffffff' })}
+                  </div>
+                )}
+              </div>
               <h2 className="text-2xl font-bold text-white mb-2">{config.instructions}</h2>
               <p className="text-dark-500">{config.description}</p>
             </div>
@@ -360,7 +368,13 @@ const AIToolTemplate: React.FC<AIToolTemplateProps> = ({ config }) => {
                 />
               ) : (
                 <div className="text-center">
-                  <span className="text-8xl mb-4 block">{config.icon}</span>
+                  {typeof config.icon === 'string' ? (
+                    <span className="text-8xl mb-4 block">{config.icon}</span>
+                  ) : (
+                    <div className="w-32 h-32 rounded-3xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 backdrop-blur-xl flex items-center justify-center border border-white/10 mx-auto mb-4">
+                      {React.createElement(config.icon, { size: 64, color: '#ffffff' })}
+                    </div>
+                  )}
                   <p className="text-dark-500 font-medium">Generated Result Preview</p>
                 </div>
               )}

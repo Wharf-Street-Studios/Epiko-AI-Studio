@@ -3,16 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useTokens } from '../../context/TokenContext';
 import { Card, Button, BottomNavigation } from '../../components/ui';
-import { Search01Icon, Coins01Icon, Notification02Icon, UserIcon, ChartLineData01Icon, ArrowRight01Icon, FaceIdIcon, UserCircleIcon, FavouriteIcon, Baby01Icon, HourglassIcon, SparklesIcon } from 'hugeicons-react';
+import { Search01Icon, Coins01Icon, Notification02Icon, ChartLineData01Icon, ArrowRight01Icon, FaceIdIcon, UserCircleIcon, FavouriteIcon, Time01Icon, MagicWand02Icon, Image02Icon } from 'hugeicons-react';
 
+// PRD v2.0 - 6 Launch Tools
 const aiTools = [
   { id: 'face-swap', name: 'Face Swap', Icon: FaceIdIcon, path: '/tools/face-swap', popular: true },
   { id: 'ai-avatar', name: 'AI Avatar', Icon: UserCircleIcon, path: '/tools/ai-avatar', popular: true },
-  { id: 'couple-photo', name: 'Couple Photo', Icon: FavouriteIcon, path: '/tools/couple-photo', popular: true },
-  { id: 'baby-predictor', name: 'Baby Predictor', Icon: Baby01Icon, path: '/tools/baby-predictor', popular: false },
-  { id: 'gender-swap', name: 'Gender Swap', Icon: UserIcon, path: '/tools/gender-swap', popular: false },
-  { id: 'age-transform', name: 'Age Transform', Icon: HourglassIcon, path: '/tools/age-transform', popular: false },
-  { id: 'enhance', name: 'Enhance', Icon: SparklesIcon, path: '/tools/enhance', popular: false },
+  { id: 'duo-portrait', name: 'Duo Portrait', Icon: FavouriteIcon, path: '/tools/duo-portrait', popular: true },
+  { id: 'poster-maker', name: 'Poster Maker', Icon: Image02Icon, path: '/tools/poster-maker', popular: false },
+  { id: 'age-transform', name: 'Age Transform', Icon: Time01Icon, path: '/tools/age-transform', popular: false },
+  { id: 'enhance', name: 'HD Enhance', Icon: MagicWand02Icon, path: '/tools/enhance', popular: false },
 ];
 
 const categories = [

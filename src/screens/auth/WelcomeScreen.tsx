@@ -30,7 +30,7 @@ const WelcomeScreen: React.FC = () => {
             <div className="flex-1">
               <h3 className="font-semibold text-white text-base mb-0.5">AI-Powered Tools</h3>
               <p className="text-sm text-dark-600 leading-snug">
-                7 professional tools including face swap, avatars, and enhancement
+                6 professional tools including face swap, avatars, and enhancement
               </p>
             </div>
           </div>

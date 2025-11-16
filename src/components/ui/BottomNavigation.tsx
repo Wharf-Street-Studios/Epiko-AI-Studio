@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Home01Icon, SparklesIcon, UserIcon } from 'hugeicons-react';
+import { Home, Sparkles, User } from 'lucide-react';
 
 interface NavItem {
   id: string;
   label: string;
   path: string;
-  icon: React.ComponentType<{ size?: number; color?: string; variant?: string }>;
+  icon: React.ComponentType<{ size?: number; color?: string; fill?: string; strokeWidth?: number }>;
 }
 
 const navItems: NavItem[] = [
-  { id: 'home', label: 'Home', path: '/discover', icon: Home01Icon },
-  { id: 'create', label: 'Create', path: '/tools', icon: SparklesIcon },
-  { id: 'profile', label: 'Profile', path: '/profile', icon: UserIcon },
+  { id: 'home', label: 'Home', path: '/discover', icon: Home },
+  { id: 'create', label: 'Create', path: '/tools', icon: Sparkles },
+  { id: 'profile', label: 'Profile', path: '/profile', icon: User },
 ];
 
 const BottomNavigation: React.FC = () => {
@@ -78,13 +78,14 @@ const BottomNavigation: React.FC = () => {
                   <Icon
                     size={24}
                     color={active ? color.from : '#9ca3af'}
-                    variant={active ? 'solid' : 'stroke'}
+                    fill={active ? color.from : 'none'}
+                    strokeWidth={2}
                   />
 
                   {/* Label */}
                   <span
                     className={`text-[10px] mt-1 transition-all duration-300 ${
-                      active ? 'font-semibold' : 'font-medium'
+                      active ? 'font-bold' : 'font-medium'
                     }`}
                     style={active ? {
                       background: `linear-gradient(135deg, ${color.from}, ${color.to})`,

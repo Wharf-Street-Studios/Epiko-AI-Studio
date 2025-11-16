@@ -1,6 +1,7 @@
 import React from 'react';
 import AIToolTemplate from '../../components/ui/AIToolTemplate';
 import { Sun03Icon, BoatIcon, MountainIcon, Building03Icon, Castle01Icon, ChurchIcon } from 'hugeicons-react';
+import { Heart } from 'lucide-react';
 
 const coupleTemplates = [
   { id: 1, name: 'Romantic Sunset', icon: Sun03Icon, category: 'Romantic' },
@@ -14,7 +15,7 @@ const coupleTemplates = [
 const CouplePhotoTool: React.FC = () => {
   const config = {
     name: 'Duo Portrait', // Updated per PRD v2.0
-    icon: '💑',
+    icon: Heart,
     toolId: 'duo-portrait', // Updated to match CREDIT_COSTS
     description: 'Create romantic scenes with your partner',
     instructions: 'Upload 2 Photos',

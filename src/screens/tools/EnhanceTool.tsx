@@ -1,6 +1,6 @@
 import React from 'react';
 import AIToolTemplate from '../../components/ui/AIToolTemplate';
-import { SparklesIcon, DiamondIcon, Camera01Icon, PaintBoardIcon, Moon02Icon, VideoReplayIcon } from 'hugeicons-react';
+import { SparklesIcon, DiamondIcon, Camera01Icon, PaintBoardIcon, Moon02Icon, VideoReplayIcon, MagicWand02Icon } from 'hugeicons-react';
 
 const enhanceStyles = [
   { id: 'standard', name: 'Standard HD', icon: SparklesIcon },
@@ -14,7 +14,7 @@ const enhanceStyles = [
 const EnhanceTool: React.FC = () => {
   const config = {
     name: 'Enhance',
-    icon: '✨',
+    icon: MagicWand02Icon,
     toolId: 'enhance',
     description: 'Improve photo quality to HD/Ultra HD',
     instructions: 'Upload Your Photo',
