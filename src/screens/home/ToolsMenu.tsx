@@ -10,7 +10,8 @@ import {
   MagicWand02Icon,
   Image02Icon,
   ViewIcon,
-  SmileDizzyIcon
+  SmileDizzyIcon,
+  Coins01Icon
 } from 'hugeicons-react';
 
 // PRD v2.0 - Enhanced with AR Features
@@ -145,7 +146,7 @@ const ToolsMenu: React.FC = () => {
           >
             <div className="absolute inset-0 rounded-full bg-gradient-to-br from-amber-400/20 to-orange-400/20 opacity-0 group-hover:opacity-100 transition-opacity" />
             <div className="relative z-10">
-              <SparklesIcon size={18} color="#fbbf24" />
+              <Coins01Icon size={18} color="#fbbf24" />
             </div>
             <span className="font-semibold text-white text-sm relative z-10">{balance}</span>
           </button>
@@ -294,8 +295,8 @@ const ToolsMenu: React.FC = () => {
                       {tool.description}
                     </p>
                     <div className="flex items-center gap-1.5 text-white/90 group-hover:text-white transition-colors duration-300">
-                      <div className="group-hover:rotate-180 group-hover:scale-125 transition-all duration-500">
-                        <SparklesIcon size={14} color="#ffffff" />
+                      <div className="group-hover:rotate-12 group-hover:scale-110 transition-all duration-500">
+                        <Coins01Icon size={14} color="#fbbf24" />
                       </div>
                       <span className="text-xs font-semibold">{tool.cost} {tool.cost === 1 ? 'credit' : 'credits'}</span>
                     </div>
@@ -323,7 +324,7 @@ const ToolsMenu: React.FC = () => {
                 WebkitBackdropFilter: 'blur(10px)',
               }}
             >
-              <SparklesIcon size={24} color="#000000" />
+              <Coins01Icon size={24} color="#000000" />
             </div>
             <div className="flex-1 min-w-0">
               <h3 className="font-bold text-white text-base mb-1 drop-shadow-lg">Need more credits?</h3>
