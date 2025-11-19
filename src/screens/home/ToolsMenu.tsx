@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCredits } from '../../context/TokenContext';
 import { BottomNavigation } from '../../components/ui';
@@ -8,19 +8,37 @@ import {
   FavouriteIcon,
   Time01Icon,
   MagicWand02Icon,
-  Image02Icon
+  Image02Icon,
+  ViewIcon,
+  SmileDizzyIcon
 } from 'hugeicons-react';
 
-// PRD v2.0 - 7 Launch Tools
-const allTools = [
+// PRD v2.0 - Enhanced with AR Features
+type ToolCategory = 'ai' | 'ar';
+
+interface Tool {
+  id: string;
+  name: string;
+  icon: any;
+  image: string;
+  description: string;
+  cost: number;
+  path: string;
+  category: ToolCategory;
+  badge?: string;
+}
+
+const allTools: Tool[] = [
+  // AI Generation Tools
   {
     id: 'face-swap',
     name: 'Face Swap',
     icon: UserIcon,
     image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=600&fit=crop',
     description: 'Replace faces in photos',
-    cost: 1, // 1 credit per PRD v2.0
+    cost: 1,
     path: '/tools/face-swap',
+    category: 'ai',
   },
   {
     id: 'ai-avatar',
@@ -28,8 +46,9 @@ const allTools = [
     icon: SparklesIcon,
     image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=600&h=600&fit=crop',
     description: 'Stylized portraits',
-    cost: 2, // 2 credits per PRD v2.0
+    cost: 2,
     path: '/tools/ai-avatar',
+    category: 'ai',
   },
   {
     id: 'duo-portrait',
@@ -37,8 +56,9 @@ const allTools = [
     icon: FavouriteIcon,
     image: 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=600&h=600&fit=crop',
     description: 'Two-person AI scenes',
-    cost: 3, // 3 credits per PRD v2.0
+    cost: 3,
     path: '/tools/duo-portrait',
+    category: 'ai',
   },
   {
     id: 'poster-maker',
@@ -46,8 +66,9 @@ const allTools = [
     icon: Image02Icon,
     image: 'https://images.unsplash.com/photo-1594908900066-3f47337549d8?w=600&h=600&fit=crop',
     description: 'Movie-style posters',
-    cost: 3, // 3 credits per PRD v2.0
-    path: '/tools/poster-maker', // TODO: Create this tool screen
+    cost: 3,
+    path: '/tools/poster-maker',
+    category: 'ai',
   },
   {
     id: 'age-transform',
@@ -55,8 +76,9 @@ const allTools = [
     icon: Time01Icon,
     image: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=600&h=600&fit=crop',
     description: 'Age progression/regression',
-    cost: 2, // 2 credits per PRD v2.0
+    cost: 2,
     path: '/tools/age-transform',
+    category: 'ai',
   },
   {
     id: 'enhance',
@@ -64,15 +86,41 @@ const allTools = [
     icon: MagicWand02Icon,
     image: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&h=600&fit=crop',
     description: 'AI upscale & sharpen',
-    cost: 1, // 1 credit per PRD v2.0
+    cost: 1,
     path: '/tools/enhance',
+    category: 'ai',
   },
-  // Note: Studio Content Packs will be integrated into these tools
+  // AR Tools
+  {
+    id: 'ar-posters',
+    name: 'AR Posters',
+    icon: ViewIcon,
+    image: 'https://images.unsplash.com/photo-1617802690658-1173a812650d?w=600&h=600&fit=crop',
+    description: 'Animated AR posters',
+    cost: 3,
+    path: '/tools/ar-posters',
+    category: 'ar',
+    badge: 'NEW',
+  },
+  {
+    id: 'character-filters',
+    name: 'AR Filters',
+    icon: SmileDizzyIcon,
+    image: 'https://images.unsplash.com/photo-1535223289827-42f1e9919769?w=600&h=600&fit=crop',
+    description: 'Face & character AR',
+    cost: 2,
+    path: '/tools/character-filters',
+    category: 'ar',
+    badge: 'NEW',
+  },
 ];
 
 const ToolsMenu: React.FC = () => {
   const navigate = useNavigate();
   const { balance } = useCredits();
+  const [activeTab, setActiveTab] = useState<ToolCategory>('ai');
+
+  const filteredTools = allTools.filter(tool => tool.category === activeTab);
 
   return (
     <div className="min-h-screen bg-black pb-20">
@@ -102,12 +150,63 @@ const ToolsMenu: React.FC = () => {
             <span className="font-semibold text-white text-sm relative z-10">{balance}</span>
           </button>
         </div>
+
+        {/* Tabs */}
+        <div className="px-4 pb-4 max-w-2xl mx-auto">
+          <div className="flex gap-2 p-1 bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10">
+            <button
+              onClick={() => setActiveTab('ai')}
+              className={`flex-1 py-3 px-4 rounded-xl font-semibold text-sm transition-all duration-300 ${
+                activeTab === 'ai'
+                  ? 'bg-white text-black shadow-lg'
+                  : 'text-white/70 hover:text-white hover:bg-white/5'
+              }`}
+            >
+              <div className="flex items-center justify-center gap-2">
+                <SparklesIcon size={18} />
+                <span>AI Tools</span>
+              </div>
+            </button>
+            <button
+              onClick={() => setActiveTab('ar')}
+              className={`flex-1 py-3 px-4 rounded-xl font-semibold text-sm transition-all duration-300 relative ${
+                activeTab === 'ar'
+                  ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg'
+                  : 'text-white/70 hover:text-white hover:bg-white/5'
+              }`}
+            >
+              <div className="flex items-center justify-center gap-2">
+                <ViewIcon size={18} />
+                <span>AR Tools</span>
+                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full">
+                  NEW
+                </span>
+              </div>
+            </button>
+          </div>
+        </div>
       </header>
 
       {/* Tools Grid */}
       <main className="p-4 max-w-2xl mx-auto">
+        {/* Tab Description */}
+        <div className="mb-6">
+          {activeTab === 'ai' && (
+            <p className="text-white/60 text-sm text-center">
+              Generate amazing content with AI-powered tools
+            </p>
+          )}
+          {activeTab === 'ar' && (
+            <div className="bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/20 rounded-2xl p-4">
+              <p className="text-white/90 text-sm text-center">
+                <span className="font-semibold text-purple-400">New AR Experience!</span> Place virtual content in your real world using augmented reality
+              </p>
+            </div>
+          )}
+        </div>
+
         <div className="grid grid-cols-2 gap-4 mb-6">
-          {allTools.map((tool, index) => {
+          {filteredTools.map((tool, index) => {
             const Icon = tool.icon;
             // Vibrant gradient colors for each tool
             const gradients = [
@@ -170,6 +269,15 @@ const ToolsMenu: React.FC = () => {
                       </div>
                     </div>
                   </div>
+
+                  {/* NEW Badge */}
+                  {tool.badge && (
+                    <div className="absolute top-3 left-3">
+                      <div className="bg-gradient-to-r from-purple-500 to-pink-500 px-2 py-1 rounded-full">
+                        <span className="text-white text-xs font-bold">{tool.badge}</span>
+                      </div>
+                    </div>
+                  )}
 
                   {/* Glass Bottom Container */}
                   <div

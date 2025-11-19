@@ -48,6 +48,12 @@ const MOCK_IMAGES = {
     'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=800&h=800&fit=crop&q=100',
     'https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=800&h=800&fit=crop&q=100',
   ],
+  'ar-posters': [
+    'https://images.unsplash.com/photo-1594908900066-3f47337549d8?w=600&h=900&fit=crop',
+    'https://images.unsplash.com/photo-1574267432644-f610fa10fc8f?w=600&h=900&fit=crop',
+    'https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?w=600&h=900&fit=crop',
+    'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=600&h=900&fit=crop',
+  ],
 };
 
 // Generate a random mock response
@@ -208,6 +214,18 @@ export const aiAPI = {
     });
   },
 
+  // AR Posters - Generate poster for AR placement
+  generateARPoster: async (data: { style?: string; title?: string; theme?: string }): Promise<AIGenerationResponse> => {
+    if (DEMO_MODE) {
+      await simulateDelay(3000);
+      return generateMockResponse('ar-posters');
+    }
+    return apiRequest('/ai/ar-poster', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  },
+
   // Get History
   getHistory: async (): Promise<{ success: boolean; generations?: AIHistoryItem[]; error?: string }> => {
     if (DEMO_MODE) {
@@ -227,6 +245,7 @@ export const getAIApiFunction = (toolId: string) => {
     'ai-avatar': aiAPI.generateAvatar,
     'duo-portrait': aiAPI.generateDuoPortrait,
     'poster-maker': aiAPI.generatePoster,
+    'ar-posters': aiAPI.generateARPoster,
     'age-transform': aiAPI.ageTransform,
     'enhance': aiAPI.enhanceImage,
   };

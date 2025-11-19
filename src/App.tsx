@@ -20,13 +20,15 @@ import ForgotPassword from './screens/auth/ForgotPassword';
 import HomeScreen from './screens/home/HomeScreen';
 import ToolsMenu from './screens/home/ToolsMenu';
 
-// AI Tools (v2.0 - 7 Launch Tools)
+// AI Tools (v2.0 - Enhanced with AR Features)
 import FaceSwapTool from './screens/tools/FaceSwapTool';
 import AIAvatarTool from './screens/tools/AIAvatarTool';
 import DuoPortraitTool from './screens/tools/CouplePhotoTool'; // Renamed from CouplePhoto
 import PosterMakerTool from './screens/tools/PosterMakerTool';
 import AgeTransformTool from './screens/tools/AgeTransformTool';
 import EnhanceTool from './screens/tools/EnhanceTool';
+import ARPostersTool from './screens/tools/ARPostersTool';
+import CharacterFiltersTool from './screens/tools/CharacterFiltersTool';
 // BabyPredictor and GenderSwap removed per PRD v2.0
 
 // Social Screens
@@ -71,10 +73,12 @@ function App() {
             <Route path="/discover" element={<ProtectedRoute><DiscoveryFeed /></ProtectedRoute>} />
             <Route path="/home" element={<Navigate to="/discover" replace />} />
 
-            {/* Tools - 7 Launch Tools (PRD v2.0) */}
+            {/* Tools - Enhanced with AR Features */}
             <Route path="/tools" element={<ProtectedRoute><ToolsMenu /></ProtectedRoute>} />
             <Route path="/tools/face-swap" element={<ProtectedRoute><FaceSwapTool /></ProtectedRoute>} />
             <Route path="/tools/ai-avatar" element={<ProtectedRoute><AIAvatarTool /></ProtectedRoute>} />
+            <Route path="/tools/ar-posters" element={<ProtectedRoute><ARPostersTool /></ProtectedRoute>} />
+            <Route path="/tools/character-filters" element={<ProtectedRoute><CharacterFiltersTool /></ProtectedRoute>} />
             <Route path="/tools/duo-portrait" element={<ProtectedRoute><DuoPortraitTool /></ProtectedRoute>} />
             <Route path="/tools/poster-maker" element={<ProtectedRoute><PosterMakerTool /></ProtectedRoute>} />
             <Route path="/tools/age-transform" element={<ProtectedRoute><AgeTransformTool /></ProtectedRoute>} />

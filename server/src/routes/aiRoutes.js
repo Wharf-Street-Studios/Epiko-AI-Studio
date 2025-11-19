@@ -4,6 +4,7 @@ import {
   generateAvatar,
   generateDuoPortrait,
   generatePoster,
+  generateARPoster,
   ageTransform,
   enhanceImage,
   getHistory
@@ -20,6 +21,7 @@ router.post('/face-swap', devAuth, generateFaceSwap);
 router.post('/avatar', devAuth, generateAvatar);
 router.post('/duo-portrait', devAuth, generateDuoPortrait);
 router.post('/poster', devAuth, generatePoster);
+router.post('/ar-poster', devAuth, generateARPoster);
 router.post('/age-transform', devAuth, ageTransform);
 router.post('/enhance', devAuth, enhanceImage);
 router.get('/history', devAuth, getHistory);

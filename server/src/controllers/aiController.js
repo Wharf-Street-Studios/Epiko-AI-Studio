@@ -650,6 +650,109 @@ export const enhanceImage = async (req, res) => {
   }
 };
 
+// @desc    Generate AR Poster
+// @route   POST /api/ai/ar-poster
+// @access  Private
+export const generateARPoster = async (req, res) => {
+  try {
+    const { style, title, theme } = req.body;
+    const creditsRequired = 15;
+    const isTest = isTestUser(req.user?.id);
+
+    let profile = { credits: 1000 };
+    let generation = null;
+
+    if (!isTest) {
+      const { data: profileData } = await supabaseAdmin
+        .from('profiles')
+        .select('credits')
+        .eq('id', req.user.id)
+        .single();
+
+      profile = profileData;
+
+      if (profile.credits < creditsRequired) {
+        return res.status(400).json({
+          success: false,
+          message: 'Insufficient credits'
+        });
+      }
+
+      const { data: generationData } = await supabaseAdmin
+        .from('ai_generations')
+        .insert([{
+          user_id: req.user.id,
+          tool: 'ar-poster',
+          input_data: { style, title, theme },
+          credits_used: creditsRequired,
+          status: 'processing'
+        }])
+        .select()
+        .single();
+
+      generation = generationData;
+    }
+
+    try {
+      const promptText = `Create an amazing ${style || 'modern'} style poster${title ? ` with the theme "${title}"` : ''}${theme ? ` incorporating ${theme} elements` : ''}. Professional graphic design, vibrant colors, eye-catching composition, suitable for AR placement. Movie poster quality, 4K resolution, portrait orientation.`;
+
+      // Generate poster with specific dimensions for AR (portrait)
+      const imageResult = await generateImageWithDimensions(promptText, {
+        width: 600,
+        height: 900,
+        model: 'flux-pro'
+      });
+
+      if (!imageResult.success) {
+        throw new Error(imageResult.error || 'Failed to generate poster');
+      }
+
+      const imageUrl = imageResult.imageUrl;
+
+      if (!isTest && generation) {
+        await supabaseAdmin
+          .from('ai_generations')
+          .update({
+            output_url: imageUrl,
+            status: 'completed',
+            completed_at: new Date().toISOString()
+          })
+          .eq('id', generation.id);
+      }
+
+      await supabaseAdmin
+        .from('profiles')
+        .update({ credits: profile.credits - creditsRequired })
+        .eq('id', req.user.id);
+
+      res.json({
+        success: true,
+        imageUrl,
+        creditsUsed: creditsRequired,
+        remainingCredits: profile.credits - creditsRequired
+      });
+    } catch (error) {
+      if (!isTest && generation) {
+        await supabaseAdmin
+          .from('ai_generations')
+          .update({
+            status: 'failed',
+            error_message: error.message
+          })
+          .eq('id', generation.id);
+      }
+
+      throw error;
+    }
+  } catch (error) {
+    console.error('AR Poster generation error:', error);
+    res.status(500).json({
+      success: false,
+      message: error.message || 'Failed to generate AR poster'
+    });
+  }
+};
+
 // @desc    Get user's AI generation history
 // @route   GET /api/ai/history
 // @access  Private

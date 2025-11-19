@@ -28,6 +28,8 @@ const CREDIT_COSTS = {
   'duo-portrait': 3,
   'age-transform': 2,
   'enhance': 1,
+  'ar-posters': 3,
+  'character-filters': 2,
 };
 
 const CREDITS_STORAGE_KEY = 'epiko_credits';
