@@ -95,7 +95,7 @@ const allTools: Tool[] = [
     id: 'ar-posters',
     name: 'AR Posters',
     icon: ViewIcon,
-    image: 'https://images.unsplash.com/photo-1617802690658-1173a812650d?w=600&h=600&fit=crop',
+    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=600&fit=crop',
     description: 'Animated AR posters',
     cost: 3,
     path: '/tools/ar-posters',
