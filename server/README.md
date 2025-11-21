@@ -2,6 +2,20 @@
 
 Node.js backend for Epiko AI Studio with Supabase database and OpenAI integration.
 
+## 🚀 Production Deployment
+
+Ready to deploy? Check these guides:
+
+- **[Quick Start Guide](QUICK_START.md)** - Deploy to production in 30 minutes (Railway/Render)
+- **[Full Deployment Guide](PRODUCTION_DEPLOYMENT.md)** - Comprehensive production deployment documentation
+- **[Deployment Checklist](DEPLOYMENT_CHECKLIST.md)** - Complete pre-launch checklist
+- **[Integration Guide](INTEGRATION_GUIDE.md)** - API integration documentation
+
+### Deployment Options
+- ✅ **Railway** (Recommended) - Fastest, easiest deployment
+- ✅ **Render** - Good free tier, automatic deployments
+- ✅ **Docker** - Deploy anywhere (AWS, GCP, Azure, DigitalOcean)
+
 ## Features
 
 ✅ **Authentication System**

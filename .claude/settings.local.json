@@ -66,7 +66,13 @@
       "WebFetch(domain:lucide-animated.com)",
       "Bash(npx shadcn@latest add:*)",
       "WebFetch(domain:lucide.dev)",
-      "WebFetch(domain:www.npmjs.com)"
+      "WebFetch(domain:www.npmjs.com)",
+      "Bash(npm audit:*)",
+      "Bash(git restore:*)",
+      "Bash(npm test)",
+      "Bash(git -C /Users/aniket/Developer/Claude-Workspace/Epiko-AI-Studio/server status --short)",
+      "Bash(ls:*)",
+      "Bash(git reset:*)"
     ],
     "deny": [],
     "ask": []
